@@ -1,32 +1,6 @@
 import colors from 'colors'
 
-function twoSum(nums, target) {
-// creando un array de arrays
-   const numsWithIndex = nums.map((num, index) => [num, index]);
-   
-   numsWithIndex.sort((a, b) => a[0] - b[0]);
-   console.log(numsWithIndex);
-   let left = 0, right = nums.length - 1;
-
-   while (left < right) {
-       const sum = numsWithIndex[left][0] + numsWithIndex[right][0];
-       if (sum === target) {
-           return [numsWithIndex[left][1], numsWithIndex[right][1]];
-       } else if (sum < target) {
-           left++;
-       } else {
-           right--;
-       }
-   }
-
-   return []; // No solution found!
-
-}
-
-console.log(twoSum([1,4,3,7], 5))
-
-
-
+// suma dos numeros
 
 // Enfoque de dos punteros 
 
@@ -264,3 +238,80 @@ function longestCommonPrefix2(array) {
 
 const prefixedArray2 = ["flower","flow","flight"];
 console.log(longestCommonPrefix2(prefixedArray));
+
+
+
+function mergeSort(array, min, max) {
+   // caso base para detener la recursividad, si esto sucede quiere decir que la matriz ya solo conteine un elemento
+   if(min <max) {
+      // si  se cumple el caso base llamaremos recursivamente
+      let half = Math.floor((min+max)/2)
+      mergeSort(array, min, half)
+      mergeSort(array, half+1, max)
+      merge(array, min, half, max)
+   }
+
+
+return array
+}
+
+const arrayUnordered = [10, 5,-1,0,90,55,7,63]
+console.log(mergeSort(arrayUnordered, 0, arrayUnordered.length-1));
+
+// funcion para  comparar y mezclar elementos de un arreglo 
+function merge(array, min, half, max) {
+   // creando un array temporal que guardara los elementos que se inserten
+   const temp = []
+   // creando variables que indexen la primer posicion del arreglo izquierdo y derecho
+   let left = min
+   let right = half+1
+
+   // hacemos conparaciones de los elementos de ambos arreglo, mientras 
+   // la primer el indice minimo de los arreglo de la izquierad y derecha sean menores o iguales a half y max posiciones maximas permitidos de cada arreglo
+
+   while(left <= half && right <= max){
+      // comparamos elementos de ambos arreglos
+      if(array[left] <= array[right]){
+         temp.push(array[left])
+         left++
+      }
+      else{
+         temp.push(array[right])
+         right++
+      }
+
+   }
+
+   // llegara un punto en que todos los elementos de un arreglo se copien antes que el otro
+   // entonces copiaremos todos los elementos restantes de ese arreglo al arreglo temporal
+   // esto mientras el indice minimo que hace referencia a cada arreglo sea menor o igual a su maximo permitido
+
+   
+   while(left <= half){
+      // si esto se cumple quiere decir que aun hay elementos en el arreglo que referencia la varaible left
+      temp.push(array[left])
+      left++
+      
+   }
+
+   while(right <= max){
+      // si esto se cumple quiere decir que aun hay elementos en el arreglo que referencia la varaible right
+      temp.push(array[right])
+      right++
+      
+   }
+
+   // luego copiamos todos los elementos del arreglo temporal al arreglo original
+console.log(temp);
+console.log(min, max);
+// iteramos desde la posicion minimo de la porcion actaul del array hasta la porcion maxima del array actual
+   for(let i = min; i <=max; i++){
+    // esta porcion quiere decir que min y max son posiciones que marcan trozos del array original, i-min ajusta la posicion del arreglo temporal para que las posiciones que se copien sean correctas, por ejemplo si min es 4 y max es 7 estariamos diciendo: quiero que en el array original en la posicion 4 se copie del arreglo temporal la posicion 4-4= 0, luego array[5] = array[5-4] =1 y asi ya que el arreglo temporal solo tendra un trozo de un arreglo y array tendra todo el arreglo completo  
+      array[i] = temp[i-min]
+   }
+
+   
+}
+
+
+

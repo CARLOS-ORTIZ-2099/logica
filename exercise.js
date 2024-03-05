@@ -1,4 +1,4 @@
-
+import color from 'colors'
 
 function maxMin(array) {
     let max = array[0]
@@ -41,4 +41,36 @@ function selectionSort(array){
 }
 
 console.log(selectionSort(array))
+
+
+// fibonnaci
+
+// example : fibonacci de 4  = f(4-1) + f(4-2)
+
+function fibonnaci(numberTarget) {
+
+    if(numberTarget <=1){
+        return numberTarget
+    }
+   
+   return fibonnaci(numberTarget-1) + fibonnaci(numberTarget-2)
+
+}
+
+console.log(fibonnaci(4));
+
+let numberTarget = 5
+// pase por valor en funciones
+function passByValue() {
+    for(let i = 1; i < 5; i++){
+        numberTarget*=i
+    }
+
+    return  numberTarget
+
+}
+
+
+console.log(passByValue())
+console.log(numberTarget)
 
