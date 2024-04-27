@@ -315,3 +315,102 @@ console.log(min, max);
 
 
 
+/* Ejercicio: Encontrar el Subarray con la Suma Máxima
+   Escribe una función llamada subarraySumaMaxima que tome un array de números enteros
+   como argumento y devuelva el subarray (contiguo) que tiene la suma máxima de todos los
+   subarrays posibles. 
+
+*/
+
+
+/* 
+function subarraySumaMaxima(arr) {
+   let maxHastaAhora = arr[0];
+   let maxGlobal = arr[0];
+   let inicioMaxSubarreglo = 0;
+   let finMaxSubarreglo = 0;
+   let inicioSubarregloTemp = 0;
+
+   for (let i = 1; i < arr.length; i++) {
+       if (arr[i] > maxHastaAhora + arr[i]) {
+           maxHastaAhora = arr[i];
+           inicioSubarregloTemp = i;
+       } else {
+           maxHastaAhora = maxHastaAhora + arr[i];
+       }
+
+       if (maxHastaAhora > maxGlobal) {
+           maxGlobal = maxHastaAhora;
+           inicioMaxSubarreglo = inicioSubarregloTemp;
+           finMaxSubarreglo = i;
+       }
+   }
+
+   return arr.slice(inicioMaxSubarreglo, finMaxSubarreglo + 1);
+}
+
+
+const numeros = [-2, 1, -3, 4, -1, 2, 1, -5, 4];
+console.log(subarraySumaMaxima(numeros))
+// Output esperado: [4, -1, 2, 1] */
+
+
+function subarreglos(array) {
+   // creando variables que indexen los inicios y finales de cada subarreglo
+   // de manera predeterminada empezaremos en el primer elemento conforme
+   // lo vallamos recorriendo ireos evaluando y cambiando
+   let maxtemp = array[0]
+   let maxglobal = array[0]
+   let iniciosubarreglo = 0
+   let finsubarreglo = 0
+   let inicioarreglotemp = 0
+
+   for(let i = 1; i < array.length; i++) {
+      // primero evaluo si el elemento actual es mayor que la suma dle acumulado mas el mismo elemento si es asi quiere decir que el elemento actual hace que la suma decresca y eso marcara el final y a su vez el inicio de un subarreglo
+      if(array[i] > maxtemp + array[i]) {
+         maxtemp = array[i]
+         // marcamos el inicio de un nuevo subarreglo
+         inicioarreglotemp = i
+      }
+      else {
+         maxtemp = maxtemp + array[i]
+      }
+
+      // luego comprobaremos si el acumulado temporal es mayor que el global
+      if(maxtemp > maxglobal) {
+         maxglobal = maxtemp
+         iniciosubarreglo = inicioarreglotemp
+         finsubarreglo = i
+
+      }
+
+   }
+
+   return array.slice(iniciosubarreglo, finsubarreglo+1)
+
+}
+const numeros = [-2, 1, -3, 4, -1, 2, 1, -5, 4]
+//console.log( subarreglos(numeros) );
+
+
+function test(string, stringAux) {
+   let array = string.split('')
+   let long = stringAux.length
+   let ar = []
+
+   for(let i = 0; i < array.length; i++) {
+      console.log(`me ejecuto`);
+      if( array.slice(i,i + long).join('') == stringAux ) {
+        // si el total de caracteres faltantes es menor al string auxiliar parar de recorrer
+        ar.push(i)
+     
+
+      }
+   }
+return ar
+}
+
+console.log(test("abracadabra", "abra"));
+/* let r =[1,2,3,4,5]
+console.log(r.slice(2,r.length)); */
+
