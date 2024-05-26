@@ -411,6 +411,8 @@ console.log(subarraySumaMaxima(numeros))
 
 })();
 
+
+
 (() => {
    console.log('************* fusionar 2 listas ordenadas ***************'.cyan);
    
@@ -631,11 +633,114 @@ console.log(subarraySumaMaxima(numeros))
          };
       
          const k = searchInsert([1,2,3,5], 4)
-         console.log(k);
+         //console.log(k);
 })();
 
 
+(() => {
+   console.log('*********** longitud de la ultima palabra ************'.cyan);
+   /* Dada una cadena s que consta de palabras y espacios, devuelve la longitud de la última 
+      palabra de la cadena. Una palabra es un maximal. subcadena que consta únicamente de
+      caracteres que no  son espacios. 
+      example : Entrada: s = "Hola mundo"
+      Salida: 5
+      Explicación: La última palabra es "Mundo" con longitud 5. los espacios no se deberian contar
+   */
 
+      var lengthOfLastWord = function(s) {
+         const divide = s.trim().split(' ')
+         const lastString = divide[divide.length-1]
+         return lastString.length
+      };
+
+      // console.log(lengthOfLastWord("luffy is still joyboy"))
+     
+   console.log('************* mas uno **************'.cyan);
+
+   /* Se le proporciona un número entero grande representado como una matriz de números enteros 
+      digits, donde cada uno digits[i]es el dígito del número entero. Los dígitos están ordenados
+      del más significativo al menos significativo de izquierda a derecha. El número entero grande
+      no contiene ningún inicial .ith0 Incrementa el número entero grande en uno y devuelve la 
+      matriz de dígitos resultante.
+      example : Entrada: dígitos = [1,2,3]
+      Salida: [1,2,4]
+      Explicación: La matriz representa el número entero 123.
+      Incrementar en uno da 123 + 1 = 124.
+      Por tanto, el resultado debería ser [1,2,4].
+   */
+
+      var plusOne = function(digits) {
+        const convert = digits.join('')
+        const value = BigInt(convert) + BigInt(1)
+        const newResult = value.toString().split('')
+        console.log(newResult);
+        return newResult
+         
+      };
+      //console.log(plusOne([6,1,4,5,3,9,0,1,9,5,1,8,6,7,0,5,5,4,3]))
+
+      console.log('************* agregar binario **************'.cyan);
+
+      /* 
+         Dadas dos cadenas binarias a y b, devuelve su suma como una cadena binaria .
+         Entrada: a = "11", b = "1"
+         Salida: "100" 
+      
+      */
+
+      var addBinary = function(a, b) {
+
+         const decimalToBinary = {
+            0: "0000",
+            1: "0001",
+            2: "0010",
+            3: "0011",
+            4: "0100",
+            5: "0101",
+            6: "0110",
+            7: "0111",
+            8: "1000",
+            9: "1001"
+         };
+
+         if(a.length > b.length) b=equalLong(a,b)
+         else if(b.length > a.length) a =equalLong(b,a)
+         function equalLong(mayor, menor){
+            //console.log(mayor, menor);
+            let diference = mayor.length-menor.length
+            //console.log(diference);
+            for(let k = 0; k < diference; k++ ){
+               menor=`0`+menor
+            }
+            //console.log(menor);
+            return menor
+         }
+         
+         
+         let l = ''
+         let k = 0
+         for(let i = a.length-1, j = b.length-1 ; i >=0; i--, j--){
+               let sum = parseFloat(a[i]) + parseFloat(b[j]) + parseFloat(k) 
+               let binary = decimalToBinary[sum]
+               //console.log(binary);
+               const significativo = binary.slice(binary.indexOf(1))
+               //console.log(`${significativo}`.red);
+               l=significativo[significativo.length-1]+l
+               k = significativo.slice(0, significativo.length-1)|| 0
+               //console.log(l, k);
+         } 
+         l=k+l
+         console.log(l);
+         return l[0] == '0' ? l.slice(1) : l
+      };
+      //console.log(addBinary('11', '1'))
+      
+
+
+    
+         
+
+})();
 
 
 
