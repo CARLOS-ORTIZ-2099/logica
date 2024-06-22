@@ -743,6 +743,442 @@ console.log(subarraySumaMaxima(numeros))
 })();
 
 
+(() => {
+   // Paréntesis válidos
+   /* Dada una cadena s que contiene solo los caracteres '(', ')', '{', '}' 
+      y , determine si la cadena '[' de ']' entrada es válida.
+
+      Una cadena de entrada es válida si: 
+      -Los corchetes abiertos deben cerrarse con el mismo tipo de corchetes.
+      -Los corchetes abiertos deben cerrarse en el orden correcto.
+      -Cada corchete cerrado tiene un corchete abierto correspondiente del
+      mismo tipo.
+      example : Entrada: s = "()"
+                Salida: verdadero
+                Entrada: s = "( )[]{ }"
+                Salida: verdadero
+                Entrada: s = "(]"
+                Salida: falso
+               
+   */
+      var isValid = function(s) {
+         const stack = [];
+         const map = {
+               ')': '(',
+               ']': '[',
+               '}': '{'
+         };
+         for (let char of s) {
+            if (char === '(' || char === '[' || char === '{') {
+               stack.push(char);
+                        
+            }
+            else if (char === ')' || char === ']' || char === '}') {
+               if (stack.pop() !== map[char]) {
+                  return false;
+               }
+            }
+         }
+               
+         return stack.length === 0;
+      };
+              
+      //console.log(isValid("()")); // true
+      //console.log(isValid("()[]{}")); // true
+    
+              
+
+})();
+
+
+
+(() => {
+   console.log('******** fusionar 2 listas enlazadas **********'.cyan);
+   // Fusionar dos listas ordenadas
+   /* Se le proporcionan los encabezados de dos listas vinculadas ordenadas
+      list1y list2.
+      Combine las dos listas en una lista ordenada . La lista debe hacerse
+      empalmando los nodos de las dos primeras listas.
+      Devuelve el encabezado de la lista enlazada fusionada . 
+      example : Entrada: lista1 = [1,2,4], lista2 = [1,3,4]
+      Salida: [1,1,2,3,4,4]
+   
+   */
+
+      class Node1 {
+         constructor(value, next){
+            this.value = value
+            this.next = next
+         }
+      }
+
+      class LinkedList1 {
+         constructor(){
+            this.head = null
+         }
+
+         insertNode(value) {
+            const newNode = new Node1(value, null)
+            if(this.head === null) {
+               this.head = newNode
+               return
+            }
+
+            let current = this.head
+            while(current.next) {
+               current = current.next
+            }
+            current.next = newNode
+
+         }
+         display(){
+            let current = this.head
+      
+            while(current) {
+               console.log(current.value);
+               current = current.next
+            }
+         }
+
+      }
+
+      class Node2 {
+         constructor(value, next){
+            this.value = value
+            this.next = next
+         }
+      }
+
+      class LinkedList2 {
+         constructor(){
+            this.head = null
+         }
+
+         insertNode(value) {
+            const newNode = new Node2(value, null)
+            if(this.head === null) {
+               this.head = newNode
+               return
+            }
+
+            let current = this.head
+            while(current.next) {
+               current = current.next
+            }
+            current.next = newNode
+
+         }
+         display(){
+            let current = this.head  
+            while(current) {
+               console.log(current.value);
+               current = current.next
+            }
+         }
+
+      }
+
+      const list1 = new LinkedList1()
+      list1.insertNode(1)
+      list1.insertNode(2)
+      list1.insertNode(4)
+      
+      
+      const list2 = new LinkedList2()
+      list2.insertNode(1)
+      list2.insertNode(3)
+      list2.insertNode(4)
+      
+
+      var mergeTwoLists = function(list1, list2) {
+         class Node {
+            constructor(value, next){
+               this.value = value
+               this.next = next
+            }
+         }
+
+         class NuevoLinked {
+            constructor(){
+               this.head = null
+            }
+
+            insertNode(value) {
+               const newNode = new Node(value, null)
+               if(this.head === null) {
+                  this.head = newNode
+                  return
+               }
+
+               let current = this.head
+               while(current.next) {
+                  current = current.next
+               }
+               current.next = newNode
+
+            }
+
+            toArray() {
+               let current = this.head;
+               const result = [];
+               while (current) {
+                   result.push(current.value);
+                   current = current.next;
+               }
+               return result;
+           }
+
+
+         }
+
+         const nuevoLinked = new NuevoLinked()
+         // list1 y list2 son encabezados de las 2 listas enlazadas
+            console.log(list1);
+            console.log(list2);
+            let current1 = list1
+            let current2 = list2
+            while( current1 && current2 ) {
+               if(current1.value <= current2.value){
+                  // aqui lo que deberiamos hacer es insertar el valor de list 1 a la instancia de LinkedList
+                  nuevoLinked.insertNode(current1.value)
+                  // y tambien cambiar el valor del head de list 1 y hacer que ahora apunte al siguiente nodo
+                  current1 = current1.next
+               }else{
+                  nuevoLinked.insertNode(current2.value)
+                  current2 = current2.next
+               }
+            }
+               
+            // si aqui hay un encabezado valido seguir iterando
+            
+            while(current1) {
+               // aqui lo que deberiamos hacer es insertar el valor de list 1 a la instancia de LinkedList
+               nuevoLinked.insertNode(current1.value)
+               // y tambien cambiar el valor del head de list 1 y hacer que ahora apunte al siguiente nodo
+               current1 = current1.next
+                  
+            }
+                      
+            while(current2) {
+               // aqui lo que deberiamos hacer es insertar el valor de list 1 a la instancia de LinkedList
+               nuevoLinked.insertNode(current2.value)
+               // y tambien cambiar el valor del head de list 1 y hacer que ahora apunte al siguiente nodo
+               current2 = current2.next
+                  
+            }
+            
+
+            console.log(nuevoLinked.head);
+            return nuevoLinked.head
+
+      }
+
+     //const head = mergeTwoLists(list1.head, list2.head)
+
+
+
+
+
+
+     console.log('******** Contiene duplicados **********'.cyan);
+     var containsDuplicate = function(nums) {
+         const ob = new Set()
+         for(let i = 0; i < nums.length; i++) {
+            if(ob.has(nums[i])) {
+               return true
+            }else{
+               ob.add(nums[i])
+            }
+            
+         }
+         return false
+
+     };
+     //console.log(containsDuplicate([0,4,5,0,3,6]));
+     
+
+
+
+     console.log('******** Contiene Duplicado II **********'.cyan);
+     /* Dada una matriz de enteros numsy un número entero k, devuelve true
+        si hay dos índices distintos i y jen la matriz tal que nums[i] ==
+        nums[j]yabs(i - j) <= k . 
+        example : Entrada: números = [1,2,3,1], k = 3
+        Salida: verdadero 
+
+
+      */
+     var containsNearbyDuplicate = function(nums, k) {
+            const mapa = new Map()
+            for(let i = 0; i < nums.length; i++) {
+               // primero verificamos si el mapa ya contiene un indice repetido, si es asi hacemos una logica 
+               if(mapa.has(nums[i])){
+                  // la logica sera hacer la diferencia entre el valor del mapa asociado a esa clave, menos el indice del valor actual del arreglo 
+                  const getIndex = mapa.get(nums[i])
+                  let diference = getIndex - i
+                  diference < 0 ? diference = diference*-1 : diference
+                  if(diference <= k) {
+                     return true
+                  }
+               }
+
+               // caso contrario lo añadimos al mapa
+               mapa.set(nums[i], i)
+               console.log(mapa);
+            }
+            return false
+        
+     };
+      //console.log(containsNearbyDuplicate([1,2,3,1,2,3] , 2));
+
+     
+
+
+      console.log('******** Número único **********'.cyan);
+      /* Dada una  matriz de números enteros no vacíanums , cada elemento aparece dos veces
+         excepto uno. Encuentra ese único. Debe implementar una solución con una complejidad
+         de tiempo de ejecución lineal y utilizar solo espacio adicional constante. 
+         example : Entrada: números = [4,1,2,1,2]
+         Salida: 4
+      
+      */
+
+
+      var singleNumber = function(nums) {
+         const ob = {}
+
+         for(let i = 0; i < nums.length; i++) {
+            if(ob[nums[i]]) {
+               ob[nums[i]] = ob[nums[i]]+1
+            }
+            else {
+               ob[nums[i]] = 1
+            }
+
+         }
+         let result = undefined
+         for(let key in ob) {
+            if( result === undefined || ob[key] < result[1] ){
+               result = [key, ob[key]]
+            }
+         }
+         return parseFloat(result[0])
+      };
+      
+      //console.log(singleNumber([2,2,5,1,6,6,5,6]));
+      //console.log(singleNumber([2,2,1,5,6,6,5,6]));
+      //console.log(singleNumber([4,1,2,1,2]));
+      //console.log(singleNumber([1]));
+
+
+})();
+
+
+
+(() => {
+
+   // listas enlazadas
+   var mergeTwoLists = function(list1, list2) {
+
+      const nuevoLinked = new ListNode()
+        
+      let current = nuevoLinked
+ 
+             while( list1 && list2 ) {
+                if(list1.val <= list2.val){
+                   // aqui lo que deberiamos hacer es insertar el valor de list 1 a la instancia de LinkedList
+                   current.next = list1
+                   // y tambien cambiar el valor del head de list 1 y hacer que ahora apunte al siguiente nodo
+                   list1 = list1.next
+                }else{
+                   current.next = list2
+                   list2 = list2.next
+                }
+                current = current.next;
+ 
+             }
+             
+            
+             
+            if (list1 !== null) {
+                current.next = list1;
+            }
+            if (list2 !== null) {
+                current.next = list2;
+            }
+             
+ 
+            return nuevoLinked.next
+   };
+
+
+
+   // arrays
+
+   var merge = function(nums1, m, nums2, n) {
+      /*       let arr = []
+      let k = 0
+      let j = 0
+   
+
+      while(k < m && j < n) {
+         if(nums1[k] <= nums2[j]) {
+            arr.push(nums1[k])
+            k++
+         }
+         else {
+            arr.push(nums2[j])
+            j++
+         }
+      }
+
+      console.log(nums1, nums2, arr);
+      console.log(k, j);
+      while(k < m){
+         arr.push(nums1[k])
+         k++
+      }
+      while(j < n){
+         arr.push(nums2[j])
+         j++
+      }
+      console.log(nums1, nums2, arr);
+      console.log(k, j);
+      for(let i = 0; i < nums1.length; i++){
+         nums1[i] = arr[i]
+      }
+      console.log(nums1);
+      return nums1 */
+
+      let i = m-1 // recorre en reversa los elementos de nums1, ignorando los invalidos
+      let j = n-1 // recorre en reversa los elementos de nums2
+
+      let k = nums1.length-1 //recorre en reversa los elementos de nums1, pero sin ignorar los invalidos 
+
+      while(j >= 0) {
+         if(i >=0 && nums1[i] > nums2[j]){
+            nums1[k] = nums1[i]
+            i--
+            k--
+         }else{
+            nums1[k] = nums2[j]
+            j--
+            k--
+         }
+      }
+      
+      console.log(nums1);
+      return nums1
+   };
+   //merge([2,2,4,0,0,0], 3, [2,3,5], 3)
+  // merge([4,5,6,0,0,0], 3, [1,2,3], 3)
+   //merge([1,2,3,0,0,0], 3, [3,5,6], 3)
+   //merge([4,0,0,0,0,0], 1, [1,2,3,5,6], 5)
+
+})();
+
+
+
 
 
 

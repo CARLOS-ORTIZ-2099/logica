@@ -6,7 +6,7 @@ const colors = require('colors');
 (() => {
     
     // aplana de manera recursiva un arreglo
-    console.log('*****************flat array*******************'.cyan);
+    console.log('***************** flat array *******************'.cyan);
 
     function flatArray(array) {
         let tempo = []
@@ -29,7 +29,7 @@ const colors = require('colors');
 
 
 
-    console.log('*****************binary search*******************'.cyan);
+    console.log('***************** binary search *******************'.cyan);
     // buscar con busqueda binaria
     function binarySearch (array, min, max, target) {
         
@@ -53,7 +53,7 @@ const colors = require('colors');
 
 
 
-    console.log('***************** merge sort*******************'.cyan);
+    console.log('***************** merge sort *******************'.cyan);
     // ordenar un arreglo con merge sort
     function mergeSort(array, min, max) {
         // caso base si el min es menor que max dividir el arreglo, caso contrario retornar
@@ -67,7 +67,6 @@ const colors = require('colors');
             merge(array, min, half, max)
             
         }
-
         return array
 
     }
@@ -122,7 +121,7 @@ const colors = require('colors');
 
 
 
-    console.log('***************** quick sort*******************'.cyan);
+    console.log('***************** quick sort *******************'.cyan);
     // ordenar un arreglo con quick sort
 
     function quickSort(array, min, max) {
@@ -137,7 +136,6 @@ const colors = require('colors');
 
         }
         return array
-
     }
 
     function partition(array, min, max) {
@@ -185,15 +183,15 @@ const colors = require('colors');
 
         // solucion 2
         /* 
-        const result = []
-        let index = 0
-        while(index < array.length){
-            console.log(index, index+target);
-            result.push(array.slice(index, index+target))
-            index+=target
-            
-        }
-        return result
+            const result = []
+            let index = 0
+            while(index < array.length){
+                console.log(index, index+target);
+                result.push(array.slice(index, index+target))
+                index+=target
+                
+            }
+            return result
         
         */
     }
@@ -707,7 +705,7 @@ const colors = require('colors');
 
 
 (() => {
-    console.log(`**************version 1 de quick sort******************`);
+    console.log(`************** version 1 de quick sort ******************`);
     // quick sort
     // ordena un arreglo 
 
@@ -876,3 +874,53 @@ function matrix(n) {
 })();
 
 
+
+(() => {
+    console.log('******************** max min ********************'.cyan);
+
+    function maxMin(array) {
+        let max = array[0]
+        let min = array[0]
+        for(let i = 1; i < array.length; i++){
+            if(max < array[i]){
+                max = array[i]
+            }
+            if(min > array[i]){
+                min = array[i]
+            }
+        }
+        return {max, min}
+    
+    }
+    // console.log(maxMin(array))
+
+
+    console.log('******************** fibonnaci ********************'.cyan);
+
+    // example : fibonacci de 4  = f(4-1) + f(4-2)
+    function fibonnaci(numberTarget) {
+
+        if(numberTarget <=1){
+            return numberTarget
+        }
+    
+        return fibonnaci(numberTarget-1) + fibonnaci(numberTarget-2)
+
+    }
+    //console.log(fibonnaci(4));
+
+
+    console.log('******************** pase por valor ********************'.cyan);
+
+    let numberTarget = 5
+    // pase por valor en funciones
+    function passByValue() {
+        for(let i = 1; i < 5; i++){
+            numberTarget*=i
+        }
+        return  numberTarget
+    }
+    console.log(passByValue())
+    console.log(numberTarget)
+
+})();
