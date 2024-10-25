@@ -1,15 +1,13 @@
 import { faL } from "@fortawesome/free-solid-svg-icons";
 import colors from "colors";
 
-
 /* whatIsInAName(
     [ { first: "Romeo", last: "Montague" }, { first: "Mercutio", last: null }, { first: "Tybalt", last: "Capulet" } ], 
     
     { last: "Capulet" } ) 
     debería regresar [{ first: "Tybalt", last: "Capulet" }].
 
-*/ 
-
+*/
 
 /* 
     whatIsInAName( [ { "apple": 1 }, { "apple": 1 }, { "apple": 1, "bat": 2 } ], 
@@ -17,15 +15,12 @@ import colors from "colors";
     debería regresar [{ "apple": 1 }, { "apple": 1 }, { "apple": 1, "bat": 2 }].
 */
 
-
 /* 
     whatIsInAName([ { "apple": 1, "bat": 2 }, { "bat": 2 }, { "apple": 1, "bat": 2, "cookie": 2 } ], 
     { "apple": 1, "bat": 2 } )
     
     debería regresar [ { "apple": 1, "bat": 2 }, { "apple": 1, "bat": 2, "cookie": 2 } ].
-*/ 
-
-
+*/
 
 /* 
 
@@ -36,14 +31,11 @@ import colors from "colors";
 
 */
 
-
 /* 
     whatIsInAName([ {"a": 1, "b": 2, "c": 3} ], 
         {"a": 1, "b": 9999, "c": 3})
         debería regresar[]
 */
-
-
 
 /* 
     Esperando :whatIsInAName([ {"a": 1, "b": 2, "c": 3, "d": 9999} ], 
@@ -61,27 +53,24 @@ import colors from "colors";
 */
 
 function whatIsInAName(collection, source) {
-    let ar = []
-    collection.forEach((valor) => {
-        let count = 0
-        for(let clave in valor){
-           // console.log(valor)
-            for(let clave1 in source){
+  let ar = [];
+  collection.forEach((valor) => {
+    let count = 0;
+    for (let clave in valor) {
+      // console.log(valor)
+      for (let clave1 in source) {
+        if (clave == clave1 && valor[clave] == source[clave1]) {
+          count++;
 
-                if(clave == clave1 && valor[clave] == source[clave1]){
-                    count++
-                    
-                    if(count == Object.entries(source).length){
-                        ar.push(valor)
-                    }
-                }
-        
-            }
-            
+          if (count == Object.entries(source).length) {
+            ar.push(valor);
+          }
         }
-    })
-   console.log(ar)
-   return ar
+      }
+    }
+  });
+  console.log(ar);
+  return ar;
 }
 
 /* whatIsInAName(
@@ -90,133 +79,111 @@ function whatIsInAName(collection, source) {
     { "apple": 1, "cookie": 2 }
 ) */
 
-
-
-
 const numeros = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
 function paresImpares(arrayNumbers) {
-    const container = {pares:[], impares:[]}
-    for(let i = 0; i < arrayNumbers.length; i++){
-        arrayNumbers[i] % 2 == 0 
-        ? container.pares.push(arrayNumbers[i])
-        : container.impares.push(arrayNumbers[i])
- 
-    }
-    return container
+  const container = { pares: [], impares: [] };
+  for (let i = 0; i < arrayNumbers.length; i++) {
+    arrayNumbers[i] % 2 == 0
+      ? container.pares.push(arrayNumbers[i])
+      : container.impares.push(arrayNumbers[i]);
+  }
+  return container;
 }
 
 /* console.log(paresImpares(numeros)) */
 
-
 function esPrimo(number) {
-    let count = 0
-   for(let i = 1; i <=number; i++){
-        if( number % i === 0 ){
-            count++
-        }
-   }
-   if(count === 2){
-     return true
-   }else{
-    return false
-   }
-
+  let count = 0;
+  for (let i = 1; i <= number; i++) {
+    if (number % i === 0) {
+      count++;
+    }
+  }
+  if (count === 2) {
+    return true;
+  } else {
+    return false;
+  }
 }
 /* console.log(esPrimo(7)) */
 
-
-
 function factorial(number) {
-    if(number == 0){
-        return 1
-    }
-    let count = 1
-    for (let i = number; i >=1 ; i--) {
-       count*=i
-        
-    }
-    return count
+  if (number == 0) {
+    return 1;
+  }
+  let count = 1;
+  for (let i = number; i >= 1; i--) {
+    count *= i;
+  }
+  return count;
 }
 
 /* console.log(factorial(4)) */
 
-
-
 function palindromo(text) {
-    function palindromo(text) {
-        const cleanedText = text.replace(/[! , ' ']/ig, '').toLowerCase();
-        const reversedText = cleanedText.split('').reverse().join('');
-    
-        console.log(reversedText);
-        console.log(cleanedText);
-    
-        return cleanedText === reversedText;
-    }
-    
-    console.log(palindromo('radar'));
-    
+  function palindromo(text) {
+    const cleanedText = text.replace(/[! , ' ']/gi, "").toLowerCase();
+    const reversedText = cleanedText.split("").reverse().join("");
+
+    console.log(reversedText);
+    console.log(cleanedText);
+
+    return cleanedText === reversedText;
+  }
+
+  console.log(palindromo("radar"));
 }
 
 /* console.log(palindromo('radar')) */
 
-
-
-
 function sumaDigitos(numbers) {
-    let arrayNumbers = numbers.toString().split('')
-    let sum = 0
-    for (let i = 0; i < arrayNumbers.length; i++) {
-      sum+= parseInt(arrayNumbers[i])
-        
-    }
-    return sum
+  let arrayNumbers = numbers.toString().split("");
+  let sum = 0;
+  for (let i = 0; i < arrayNumbers.length; i++) {
+    sum += parseInt(arrayNumbers[i]);
+  }
+  return sum;
 }
 /* console.log(sumaDigitos(741)) */
 
-
-
-
 function rangoPrimos(numberInit, numberFinal) {
-    let arrayContainer = []
-    for (let i = numberInit; i <= numberFinal; i++) {
-        let count = 0;
-        for (let y = 1; y <= Math.sqrt(i); y++) {
-            if (i % y === 0) {
-                count++;
-                if (y !== i / y) {
-                    // Asegura que no cuente el mismo divisor dos veces (cuando y === i / y).
-                    count++;
-                }
-            }
+  let arrayContainer = [];
+  for (let i = numberInit; i <= numberFinal; i++) {
+    let count = 0;
+    for (let y = 1; y <= Math.sqrt(i); y++) {
+      if (i % y === 0) {
+        count++;
+        if (y !== i / y) {
+          // Asegura que no cuente el mismo divisor dos veces (cuando y === i / y).
+          count++;
         }
-        if (count === 2) {
-            arrayContainer.push(i);
-        }
+      }
     }
+    if (count === 2) {
+      arrayContainer.push(i);
+    }
+  }
 
-    return arrayContainer;
+  return arrayContainer;
 }
 
 /* console.log(rangoPrimos(5, 10)) */
 
-
-
 function pruebaPrimo(number) {
-
-    let contador = 0
-/* la razon de iterar hasta la raiz cuadrada de un numero para verificar si al dividir ese numero con sus 
+  let contador = 0;
+  /* la razon de iterar hasta la raiz cuadrada de un numero para verificar si al dividir ese numero con sus 
    predecesores es por que si hay un divisor mayor que su raiz cuadrada tambien habra un divisor menor 
 */
-    for (let i = 1; i <= Math.sqrt(number); i++) {
-        if (number % i === 0) {
-            contador++;
-            if (i !== number / i) {
-                contador++;
-            }
-        }
+  for (let i = 1; i <= Math.sqrt(number); i++) {
+    if (number % i === 0) {
+      contador++;
+      if (i !== number / i) {
+        contador++;
+      }
     }
-    return contador === 2 ? 'es primo' : 'no es primo';
+  }
+  return contador === 2 ? "es primo" : "no es primo";
 }
 //console.log(pruebaPrimo(81))
 
@@ -234,8 +201,6 @@ function pruebaPrimo(number) {
     k = 36/9
     k = 4 
 */
-
-
 
 // emparejamiento de adn
 
@@ -256,26 +221,23 @@ function pruebaPrimo(number) {
 */
 
 function pairElement(str) {
-    let nucleo1 = 'AT';
-    let nucleo2 = 'CG';
-    let split =  str.split('');
-    let newA = []
-   for(let i = 0; i < split.length; i++){
-        if(nucleo1.includes(split[i])){
-          let respose =  [...nucleo1].find((ele) => ele!= split[i])
-          newA.push([split[i], respose])
-
-        }else if(nucleo2.includes(split[i])){
-          let respose =  [...nucleo2].find((ele) => ele!= split[i])
-          newA.push([split[i], respose])
-        }
-   }
-   return newA
+  let nucleo1 = "AT";
+  let nucleo2 = "CG";
+  let split = str.split("");
+  let newA = [];
+  for (let i = 0; i < split.length; i++) {
+    if (nucleo1.includes(split[i])) {
+      let respose = [...nucleo1].find((ele) => ele != split[i]);
+      newA.push([split[i], respose]);
+    } else if (nucleo2.includes(split[i])) {
+      let respose = [...nucleo2].find((ele) => ele != split[i]);
+      newA.push([split[i], respose]);
+    }
+  }
+  return newA;
 }
-  
+
 // console.log(pairElement("CTCTA"));
-
-
 
 // suma de los numeros impares de la serie de fibonacci
 
@@ -286,31 +248,25 @@ function pairElement(str) {
 */
 
 function sumFibs(num) {
-    let count = 0
-    let array = [0, 1]
-    for (let i = 1; i <=num; i++) {
-       let sumados = array[i]+array[i-1]
-       if(sumados%2 != 0 && sumados  <= num){
-            count+= sumados
-       }
-       array.push(sumados)
-        
+  let count = 0;
+  let array = [0, 1];
+  for (let i = 1; i <= num; i++) {
+    let sumados = array[i] + array[i - 1];
+    if (sumados % 2 != 0 && sumados <= num) {
+      count += sumados;
     }
- return count+1
+    array.push(sumados);
+  }
+  return count + 1;
 }
-  
+
 // console.log(sumFibs(75025))
 
-
-
-
-// corroborar si es primo o no 
+// corroborar si es primo o no
 
 /*
     An integer is prime if it is not divisible by any prime less than or equal to its square root
 */
-
-
 
 /* cuando busquemos numeros primos y querramos ahorrar recursos una buena idea es 
    solo buscar hasta la raiz cuadrada de dicho numero ya que un numero se puede considerar primo si los divisores(sin incluir al 1 y al mismo numero) de dicho numero no son mayores que la raiz de dicho numero
@@ -318,21 +274,19 @@ function sumFibs(num) {
 */
 
 function isPrime(number) {
-    const square =Math.floor(Math.sqrt(number))
-    console.log(`raiz cuadrada: ${square}`)
-   
-    for(let i = 2; i <= square; i++){
-        console.log(i)
-        if(number % i == 0){
-            return false
-        }
+  const square = Math.floor(Math.sqrt(number));
+  console.log(`raiz cuadrada: ${square}`);
+
+  for (let i = 2; i <= square; i++) {
+    console.log(i);
+    if (number % i == 0) {
+      return false;
     }
-    return true
+  }
+  return true;
 }
 
 //console.log(isPrime(17))
-
-
 
 /* pseudocodigo: para verificar la primalidad de un numero
    entonces cuando me digan algo como verificar si un numero es primo o no, solo debería buscar hasta su raíz cuadrada  ya que si en el rango de números de esa raíz cuadrada hay un numero (menor o igual a la raiz) que sea divisible por el numero dado entonces tambien habra otro mayor y eso quiere decir que tiene multiples divisores y no puede ser primo, por otro lado si  en el rango de numeros de la raiz no hay numeros (menores o iguales )a la raiz que sean divisibles por dicho numero tampoco habra uno mayor, es asi o me equivoco? 
@@ -340,31 +294,26 @@ function isPrime(number) {
 
 */
 
-
 function sumPrimes(num) {
-    // Helper function to check primality
-    function isPrime(num) {
-      const sqrt = Math.sqrt(num);
-      for (let i = 2; i <= sqrt; i++) {
-        if (num % i === 0)
-          return false;
-      }
-      return true;
+  // Helper function to check primality
+  function isPrime(num) {
+    const sqrt = Math.sqrt(num);
+    for (let i = 2; i <= sqrt; i++) {
+      if (num % i === 0) return false;
     }
-  
-    // Check all numbers for primality
-    let sum = 0;
-    for (let i = 2; i <= num; i++) {
-      if (isPrime(i))
-        sum += i;
-    }
-    return sum;
+    return true;
+  }
+
+  // Check all numbers for primality
+  let sum = 0;
+  for (let i = 2; i <= num; i++) {
+    if (isPrime(i)) sum += i;
+  }
+  return sum;
 }
 //console.log(sumPrimes(10))
 
-
-
-// minimo comun multiplo 
+// minimo comun multiplo
 
 /* pseudocodigo MCM : crear una funcion que recibe como parametro un arreglo
  este arreglo tendra 2 elementos, donde cada uno de ellos representara un numero o punto de partida
@@ -382,129 +331,115 @@ function sumPrimes(num) {
  pasamos al siguiente 5 y asi de manera gradual hasta dejar todos los valores de ese rango en 1
 */
 
-    // solucion 1
-function smallestCommons(arrayRange){
-    if(arrayRange[0] > arrayRange[arrayRange.length-1]){
-        arrayRange.sort()
-    }
-    let ar = []
-    let point = []
-    for (let j = arrayRange[0]; j <=arrayRange[arrayRange.length-1]; j++) {
-        ar.push(j)   
-    }
-    console.log(ar)
-    
-    let p = 2
+// solucion 1
+function smallestCommons(arrayRange) {
+  if (arrayRange[0] > arrayRange[arrayRange.length - 1]) {
+    arrayRange.sort();
+  }
+  let ar = [];
+  let point = [];
+  for (let j = arrayRange[0]; j <= arrayRange[arrayRange.length - 1]; j++) {
+    ar.push(j);
+  }
+  console.log(ar);
 
-    while(ar.some((nu) => nu > 1)){
-       console.log(p)
-       let nl = null
-       for (let i = 0; i < ar.length; i++) {
-        
-            if(ar[i] % p === 0){
-                nl = 1
-                ar[i] = ar[i]/p 
-                
-            }
-            if(nl != null && i >= ar.length-1){
-                point.push(p)
-            }
-           // console.log('indice ' + i)
-       } 
+  let p = 2;
 
-       if(ar.every((nu) => nu%p !==0)){
-            p++
-       }
-       
-    }
-        
-    
-   console.log({ar,point})
-   return point.reduce((acc, current) => acc*current)
-
-}
-   //console.log(smallestCommons([23, 18])) 
-
-
-   // solucion 2
-function smallestCommons1(arrayRange) {
-    const gcd = (a, b) => {
-      while (b !== 0) {
-        [a, b] = [b, a % b];
+  while (ar.some((nu) => nu > 1)) {
+    console.log(p);
+    let nl = null;
+    for (let i = 0; i < ar.length; i++) {
+      if (ar[i] % p === 0) {
+        nl = 1;
+        ar[i] = ar[i] / p;
       }
-      return a;
-    };
-  
-    const lcm = (a, b) => (a * b) / gcd(a, b);
-  
-    arrayRange.sort((a, b) => a - b);
-    let result = arrayRange[0];
-    for (let i = arrayRange[0] + 1; i <= arrayRange[1]; i++) {
-      result = lcm(result, i);
+      if (nl != null && i >= ar.length - 1) {
+        point.push(p);
+      }
+      // console.log('indice ' + i)
     }
-  
-    return result;
+
+    if (ar.every((nu) => nu % p !== 0)) {
+      p++;
+    }
+  }
+
+  console.log({ ar, point });
+  return point.reduce((acc, current) => acc * current);
 }
-  
-  //console.log(smallestCommons1([1, 5]));
+//console.log(smallestCommons([23, 18]))
 
+// solucion 2
+function smallestCommons1(arrayRange) {
+  const gcd = (a, b) => {
+    while (b !== 0) {
+      [a, b] = [b, a % b];
+    }
+    return a;
+  };
 
-  // solucion 3
+  const lcm = (a, b) => (a * b) / gcd(a, b);
+
+  arrayRange.sort((a, b) => a - b);
+  let result = arrayRange[0];
+  for (let i = arrayRange[0] + 1; i <= arrayRange[1]; i++) {
+    result = lcm(result, i);
+  }
+
+  return result;
+}
+
+//console.log(smallestCommons1([1, 5]));
+
+// solucion 3
 
 function smallestCommons2(arr) {
-   
-   // primero ordenamos el arreglo de menos a mas 
-    const [min, max] = arr.sort((a, b) => a - b);
-  // aqui lo que hacemos es calcular la cantidad de elementos dentro de un rango 
-    const numberDivisors = max - min + 1;
-    console.log('valor:'.bgBlue +' ' + numberDivisors)
+  // primero ordenamos el arreglo de menos a mas
+  const [min, max] = arr.sort((a, b) => a - b);
+  // aqui lo que hacemos es calcular la cantidad de elementos dentro de un rango
+  const numberDivisors = max - min + 1;
+  console.log("valor:".bgBlue + " " + numberDivisors);
 
   /* entonces se itera desde el valor minimo hasta el maximo y se
      multiplica el valor de la variable con cada numero de ese rango,
      para hallar un limite superior , el proposito es : establecer un
      punto máximo hasta el cual se buscarán los múltiplos comunes
      dentro del rango proporcionado. 
-  */  
+  */
 
-    let upperBound = 1;
+  let upperBound = 1;
 
-    for (let i = min; i <= max; i++) {
-      upperBound *= i;
-    }
-    console.log(upperBound)
+  for (let i = min; i <= max; i++) {
+    upperBound *= i;
+  }
+  console.log(upperBound);
 
-    /* hacemos un for que va desde el numero maximo hasta el limite
+  /* hacemos un for que va desde el numero maximo hasta el limite
        superior, y la varaible incial va creciendo de max en max, 
        luego hacemos un recorrrido del minimo al maximo y comparamos
        cada numero de ese rango con la variable multiple del bucle externo haber si es divisible por alguno de ellos, si es asi la varaible divisorCount ira creciendo y alfinal evaluaremos 
        si esa varaibel es igaul al numero de elementos del rango 
        dado, si es asi quiere decir que multiple es divisible por todos por todos los numeros de ese rango
     */
-  
-    for (let multiple = max; multiple <= upperBound; multiple += max) {
-    
-      let divisorCount = 0;
-      
 
-      for (let i = min; i <= max; i++) {
-      
-        if (multiple % i === 0) {
-          divisorCount += 1;
-        }
+  for (let multiple = max; multiple <= upperBound; multiple += max) {
+    let divisorCount = 0;
+
+    for (let i = min; i <= max; i++) {
+      if (multiple % i === 0) {
+        divisorCount += 1;
       }
-
-      if (divisorCount === numberDivisors) {
-        return multiple;
-      }
-
     }
+
+    if (divisorCount === numberDivisors) {
+      return multiple;
+    }
+  }
 }
-  
-console.log(smallestCommons2([23, 18]))
 
+console.log(smallestCommons2([23, 18]));
 
-
-// Déjalo caer 
+// Déjalo caer
 
 /* 
    Dada la matriz arr, itere y elimine cada elemento comenzando desde el primer 
@@ -514,7 +449,6 @@ console.log(smallestCommons2([23, 18]))
 
 */
 
-
 /* pseudocodigo dejalo caer:
    primero empezamos recorriendo el arreglo, cada elemento iterado, lo pasaremos a la funcion, si nos da false, eliminaremos dicho numero del arreglo y segiremos iterando, en caso nos devuelva true, pararemos la
    iteracion y devolveremos el arreglo con los numeros restantes 
@@ -522,45 +456,35 @@ console.log(smallestCommons2([23, 18]))
 */
 
 function dropElements(arr, func) {
-    let range = arr.length
-    for(let i = 0; i < range; i++){
-       const boolean =  func(arr[0])
-       if(boolean == true){
-            break
-       }else{
-        arr.shift()
-       }
+  let range = arr.length;
+  for (let i = 0; i < range; i++) {
+    const boolean = func(arr[0]);
+    if (boolean == true) {
+      break;
+    } else {
+      arr.shift();
     }
-    return arr
+  }
+  return arr;
 }
-  
+
 // console.log(dropElements( [1, 2, 3, 4], function(n) {return n > 5; }) )
 
+// aplanando arrays
 
-
-
-
-// aplanando arrays     
-
-// aplanando arrays de un solo nivel 
-var arrayvar = [['element 1'], ['element 2',[[],[]],[]]];
+// aplanando arrays de un solo nivel
+var arrayvar = [["element 1"], ["element 2", [[], []], []]];
 
 var flattenArray = [].concat.apply([], arrayvar);
 
-
 // console.log(flattenArray);
-
-
-
 
 // de esta manera aplanamos un arreglo de cualquier dimension
 function steamrollArray(arr) {
-    return console.log(arr.flat(Infinity));
+  return console.log(arr.flat(Infinity));
 }
-  
+
 //console.log(steamrollArray( [[["a"]], [["b"]]] ))
-
-
 
 // aplanando un array multidimensional
 
@@ -569,65 +493,56 @@ function steamrollArray(arr) {
    reduciremos de nuevo de forma recursiva. 
 */
 
-
 function myFlatFunction(array) {
+  const result = array.reduce((acc, current) => {
+    console.log(acc);
+    return acc.concat(
+      Array.isArray(current) ? myFlatFunction(current) : current
+    );
+  }, []);
 
-  
-    const result =  array.reduce((acc, current)=> {
-        console.log(acc)
-        return acc.concat( Array.isArray(current) ? myFlatFunction(current) : current )
-    },[]  );
-
-    return result
-
+  return result;
 }
 
-let flatArray = [['element 1'], [ 'element 2', [3,[4]] ],[5]];
+let flatArray = [["element 1"], ["element 2", [3, [4]]], [5]];
 // console.log( myFlatFunction(flatArray));
 
-
 function flatArrayNew(array) {
-    let store = []
-    console.log(array)
-    for(let i = 0; i < array.length; i++){
-        console.log(array[i])
-        if(Array.isArray(array[i])){
-            
-            store =  store.concat(flatArrayNew(array[i]))
-               
-        }else{
-            store.push(array[i])
-        }
+  let store = [];
+  console.log(array);
+  for (let i = 0; i < array.length; i++) {
+    console.log(array[i]);
+    if (Array.isArray(array[i])) {
+      store = store.concat(flatArrayNew(array[i]));
+    } else {
+      store.push(array[i]);
     }
-return store
+  }
+  return store;
 }
 
-const arrMult = [1, [2], [3, [[4]]]]
+const arrMult = [1, [2], [3, [[4]]]];
 
 // console.log(flatArrayNew( arrMult ))
 
-
-
 function arrayRollFlat(array) {
-    let store = []
-    for(let i = 0; i < array.length; i++){
-        console.log(array[i])
-        // esta condicion nos sirve para crear un nuevo contexto, y en ese nuevo contexto ejecutar la misma logica
-        if(Array.isArray(array[i])){
-            console.log(`this is array nested`.bgCyan)
-            store = store.concat(arrayRollFlat(array[i]))
-        }else {
-          // en caso no fuera un arreglo insertamos ese elemento al store y lo retronamos al contexto superior  
-            store.push(array[i])
-        }
+  let store = [];
+  for (let i = 0; i < array.length; i++) {
+    console.log(array[i]);
+    // esta condicion nos sirve para crear un nuevo contexto, y en ese nuevo contexto ejecutar la misma logica
+    if (Array.isArray(array[i])) {
+      console.log(`this is array nested`.bgCyan);
+      store = store.concat(arrayRollFlat(array[i]));
+    } else {
+      // en caso no fuera un arreglo insertamos ese elemento al store y lo retronamos al contexto superior
+      store.push(array[i]);
     }
-return store
-
+  }
+  return store;
 }
-const ArraysTestNested = [1, 2, [3, [4,5] ], [6], [7] ]
+const ArraysTestNested = [1, 2, [3, [4, 5]], [6], [7]];
 
-console.log(arrayRollFlat(ArraysTestNested ) )
-
+console.log(arrayRollFlat(ArraysTestNested));
 
 // convertir binario a texto
 
@@ -660,145 +575,135 @@ console.log(arrayRollFlat(ArraysTestNested ) )
 
 */
 
-
 // solucion 1
 function binaryAgent(str) {
-   const overLetters =  str.split(' ')
-  
-  let phraseJoin = ''
-   for(let i = 0; i < overLetters.length; i++){
-        
-        let numberRemains = overLetters[i].substring(3,overLetters[i].length)
-        let threeFirst = overLetters[i].substring(0,3)
-        console.log(threeFirst)
-        let init = 0
-        let sum = 0
-        if(threeFirst != '010' && threeFirst != '011' ){
-          //  console.log(overLetters[i] + 'dscds'.bgBlue)
-            for(let k = overLetters[i].length-1; k >=0; k--){
-                let potencia1 = 2**init
-                if(overLetters[i][k] == 1){
-                    sum+=potencia1
-                }
-                init++
-            }
-            phraseJoin+= findLetter(sum)
+  const overLetters = str.split(" ");
+
+  let phraseJoin = "";
+  for (let i = 0; i < overLetters.length; i++) {
+    let numberRemains = overLetters[i].substring(3, overLetters[i].length);
+    let threeFirst = overLetters[i].substring(0, 3);
+    console.log(threeFirst);
+    let init = 0;
+    let sum = 0;
+    if (threeFirst != "010" && threeFirst != "011") {
+      //  console.log(overLetters[i] + 'dscds'.bgBlue)
+      for (let k = overLetters[i].length - 1; k >= 0; k--) {
+        let potencia1 = 2 ** init;
+        if (overLetters[i][k] == 1) {
+          sum += potencia1;
         }
-        else{
-            for(let j = numberRemains.length-1; j >= 0; j--){
-                let potencia = 2**init
-             
-                if(numberRemains[j] == 1){
-                    sum+=potencia
-                }
-                
-                init++
-            }
-         console.log(sum + 'sum'.bgBlue)
-           phraseJoin+= findLetter(sum, threeFirst)
+        init++;
+      }
+      phraseJoin += findLetter(sum);
+    } else {
+      for (let j = numberRemains.length - 1; j >= 0; j--) {
+        let potencia = 2 ** init;
+
+        if (numberRemains[j] == 1) {
+          sum += potencia;
         }
-       
-   }
-   return phraseJoin
+
+        init++;
+      }
+      console.log(sum + "sum".bgBlue);
+      phraseJoin += findLetter(sum, threeFirst);
+    }
+  }
+  return phraseJoin;
 }
 
 //console.log(binaryAgent('01000001 01110010 01100101 01101110 00100111 01110100 00100000 01100010 01101111 01101110 01100110 01101001 01110010 01100101 01110011 00100000 01100110 01110101 01101110 00100001 00111111'))
 
-
-
 function findLetter(sum, letters) {
-    console.log(sum)
-   // console.log(letters)
-    let minus = '011'
-    let mayus = '010'
-    const abecedario = {
-        1: 'a',
-        2: 'b',
-        3: 'c',
-        4: 'd',
-        5: 'e',
-        6: 'f',
-        7: 'g',
-        8: 'h',
-        9: 'i',
-        10: 'j',
-        11: 'k',
-        12: 'l',
-        13: 'm',
-        14: 'n',
-        15: 'o',
-        16: 'p',
-        17: 'q',
-        18: 'r',
-        19: 's',
-        20: 't',
-        21: 'u',
-        22: 'v',
-        23: 'w',
-        24: 'x',
-        25: 'y',
-        26: 'z',
-        32: ' ',
-        33: '!',
-        39: "'",
-        63: '?'
-    };
+  console.log(sum);
+  // console.log(letters)
+  let minus = "011";
+  let mayus = "010";
+  const abecedario = {
+    1: "a",
+    2: "b",
+    3: "c",
+    4: "d",
+    5: "e",
+    6: "f",
+    7: "g",
+    8: "h",
+    9: "i",
+    10: "j",
+    11: "k",
+    12: "l",
+    13: "m",
+    14: "n",
+    15: "o",
+    16: "p",
+    17: "q",
+    18: "r",
+    19: "s",
+    20: "t",
+    21: "u",
+    22: "v",
+    23: "w",
+    24: "x",
+    25: "y",
+    26: "z",
+    32: " ",
+    33: "!",
+    39: "'",
+    63: "?",
+  };
 
-    let letterTarget =  abecedario[sum]
-    if(letters == mayus){
-        console.log(letterTarget.toUpperCase())
-        return letterTarget.toUpperCase()
-    }else if(letters == minus){
-        console.log(letterTarget)
-        return letterTarget
-    }else{
-        return abecedario[sum]
-    }
+  let letterTarget = abecedario[sum];
+  if (letters == mayus) {
+    console.log(letterTarget.toUpperCase());
+    return letterTarget.toUpperCase();
+  } else if (letters == minus) {
+    console.log(letterTarget);
+    return letterTarget;
+  } else {
+    return abecedario[sum];
+  }
 }
-
-
 
 // solucion 2
 
 function binaryAgent1(str) {
-    // Separate the binary code by space.
-    str = str.split(" ");
-    var power;
-    var decValue = 0;
-    var sentence = "";
-  
-    // Check each binary number from the array.
-    for (var s = 0; s < str.length; s++) {
-      // Check each bit from binary number
-      for (var t = 0; t < str[s].length; t++) {
-        // This only takes into consideration the active ones.
-        if (str[s][t] == 1) {
-          // This is quivalent to 2 ** position
-          power = Math.pow(2, +str[s].length - t - 1);
-          decValue += power;
-  
-          // Record the decimal value by adding the number to the previous one.
-        }
+  // Separate the binary code by space.
+  str = str.split(" ");
+  var power;
+  var decValue = 0;
+  var sentence = "";
+
+  // Check each binary number from the array.
+  for (var s = 0; s < str.length; s++) {
+    // Check each bit from binary number
+    for (var t = 0; t < str[s].length; t++) {
+      // This only takes into consideration the active ones.
+      if (str[s][t] == 1) {
+        // This is quivalent to 2 ** position
+        power = Math.pow(2, +str[s].length - t - 1);
+        decValue += power;
+
+        // Record the decimal value by adding the number to the previous one.
       }
-  
-      // After the binary number is converted to decimal, convert it to string and store
-      sentence += String.fromCharCode(decValue);
-  
-      // Reset decimal value for next binary number.
-      decValue = 0;
     }
-  
-    return sentence;
+
+    // After the binary number is converted to decimal, convert it to string and store
+    sentence += String.fromCharCode(decValue);
+
+    // Reset decimal value for next binary number.
+    decValue = 0;
+  }
+
+  return sentence;
 }
-  
-  // test here
+
+// test here
 /* console.log(binaryAgent1(
     "01000001 01110010 01100101 01101110 00100111 01110100 00100000 01100010 01101111 01101110 01100110 01101001 01110010 01100101 01110011 00100000 01100110 01110101 01101110 00100001 00111111"
 )) */
 
-
-
-// todo sea verdad 
+// todo sea verdad
 
 /* Compruebe si el predicado (segundo argumento) es verdadero en todos los elementos de
    una colección (primer argumento).En otras palabra, se le proporciona una colección de
@@ -807,84 +712,66 @@ function binaryAgent1(str) {
 
 */
 
-
 function truthCheck(collection, pre) {
-   // datos que equivalen a falsy: 0, null, NaN undefined, false, ""
-    for(let i = 0; i < collection.length; i++){
-         if(!collection[i][pre]){
-            console.log('es falsy')
-            return false
-         }
-         
+  // datos que equivalen a falsy: 0, null, NaN undefined, false, ""
+  for (let i = 0; i < collection.length; i++) {
+    if (!collection[i][pre]) {
+      console.log("es falsy");
+      return false;
     }
+  }
 
-    return true
+  return true;
 }
-  
+
 /*  console.log(truthCheck( [{name: "Pikachu", number: 25, caught: 3}, {name: "Togepi", number: 175, caught: 1}, {name: "MissingNo", number: NaN, caught: 0}], "number")) */
 
-
-
-const objTest = { name: 'carlos', age: 21 }
-let response =  objTest.hasOwnProperty('new')
+const objTest = { name: "carlos", age: 21 };
+let response = objTest.hasOwnProperty("new");
 //console.log(response);
 
 // hasOwnProperty: verifica si un objeto tiene una propiedad especifica
 
-
-
-
 // Argumentos opcionales
 
 function addTogether(...rest) {
-    console.log(rest)
-    if(rest.some((element) => typeof element != 'number')){
-        return undefined
+  console.log(rest);
+  if (rest.some((element) => typeof element != "number")) {
+    return undefined;
+  } else if (rest.length <= 1) {
+    function closure(z) {
+      if (typeof z != "number") {
+        return undefined;
+      }
+      console.log(rest[0] + "xxxx".bgBlue);
+      return rest[0] + z;
     }
-
-    else if(rest.length <=1){    
-        function closure(z){
-            if(typeof z != 'number'){
-                return undefined
-            }
-            console.log(rest[0] + 'xxxx'.bgBlue)
-            return rest[0] + z
-        }
-        return closure
-
-    }else{
-        let sum = 0
-        for (let i = 0; i < rest.length; i++) {
-            //console.log(rest[i]);
-            sum+=rest[i]
-        }
-        return sum
+    return closure;
+  } else {
+    let sum = 0;
+    for (let i = 0; i < rest.length; i++) {
+      //console.log(rest[i]);
+      sum += rest[i];
     }
-    
+    return sum;
+  }
 }
-  
-console.log(addTogether(3)(4))
 
+console.log(addTogether(3)(4));
 
 // palindromo
 function palindrome(str) {
-    let ref = str.replace(/[^A-Za-z0-9]/g, '')
-    let reverse = ref.split('').reverse().join('')
-    console.log(ref);
-    console.log(reverse);
-    if(ref.toLowerCase() === reverse.toLowerCase()){
-        return true
-    }
-    return false
+  let ref = str.replace(/[^A-Za-z0-9]/g, "");
+  let reverse = ref.split("").reverse().join("");
+  console.log(ref);
+  console.log(reverse);
+  if (ref.toLowerCase() === reverse.toLowerCase()) {
+    return true;
+  }
+  return false;
 }
-  
+
 console.log(palindrome("A man, a plan, a canal. Panama"));
-
-
-
-
-
-
 
 // cifrado cesar
 /* pseudocodigo para el cifrado cesar: deberemos recibir una cadena
@@ -898,107 +785,86 @@ console.log(palindrome("A man, a plan, a canal. Panama"));
 
 */
 
-
-
 function rot13(str) {
-    const abecedario = 'abcdefghijklmnopqrstuvwxyz'
-    const split = abecedario.split('')
-    console.log(split);
-    let deco = ''
-    for(let i = 0; i < str.length; i++){
-      let indexLetter = split.indexOf(str[i].toLowerCase())
-      if(indexLetter === -1){
-        console.log(`no esta incluido ${str[i]}`);
-        deco+=str[i]
-      }else if(indexLetter <= 12){
-        deco+= split[indexLetter + 13]
-      }else{
-        // la variable newIndex sera el residuo de indexLetter(numero mayor que la mitad del arreglo ) menos 13(posiciones a desplazar)
-        // dicho de ora manera podrias verlo como que sera el residuo de lo que me falte por recorrer
-        let newIndex =  indexLetter - 13
-        deco+= split[newIndex]
-      }
+  const abecedario = "abcdefghijklmnopqrstuvwxyz";
+  const split = abecedario.split("");
+  console.log(split);
+  let deco = "";
+  for (let i = 0; i < str.length; i++) {
+    let indexLetter = split.indexOf(str[i].toLowerCase());
+    if (indexLetter === -1) {
+      console.log(`no esta incluido ${str[i]}`);
+      deco += str[i];
+    } else if (indexLetter <= 12) {
+      deco += split[indexLetter + 13];
+    } else {
+      // la variable newIndex sera el residuo de indexLetter(numero mayor que la mitad del arreglo ) menos 13(posiciones a desplazar)
+      // dicho de ora manera podrias verlo como que sera el residuo de lo que me falte por recorrer
+      let newIndex = indexLetter - 13;
+      deco += split[newIndex];
     }
+  }
 
-    return deco.toUpperCase()
-    
+  return deco.toUpperCase();
 }
-  
 
-console.log(rot13("GUR DHVPX OEBJA SBK WHZCF BIRE GUR YNML QBT."))
-
-
-
-
-
-
+console.log(rot13("GUR DHVPX OEBJA SBK WHZCF BIRE GUR YNML QBT."));
 
 // Validador de número de teléfono
 
-
 function telephoneCheck(str) {
-    const phonesNumbers = [
-        "555-555-5555",
-        "(555)555-5555",
-        "(555) 555-5555",
-        "555 555 5555",
-        "5555555555",
-        "1 555 555 5555"
-    ]
-    
+  const phonesNumbers = [
+    "555-555-5555",
+    "(555)555-5555",
+    "(555) 555-5555",
+    "555 555 5555",
+    "5555555555",
+    "1 555 555 5555",
+  ];
 
-  let newArray = phonesNumbers.map(ele => ele.replace(/1 /, ''))
+  let newArray = phonesNumbers.map((ele) => ele.replace(/1 /, ""));
   console.log(newArray);
-    
-  let newtext
-    if(str.slice(0,2) == '1 '){
-       str =  str.replace('1 ','')
-       console.log(str);
-       newtext = str.replace(/\d/g, '5');
-       console.log(newArray);
-       console.log(newtext);
-    }
-    else if(str[0] == '1'){
-        str =  str.replace('1','')
-        console.log(str);
-        newtext = str.replace(/\d/g, '5');
-        console.log(newArray);
-        console.log(newtext);
-    }
-    else{
-        newtext = str.replace(/\d/g, '5');
-        console.log(str);
-        console.log(newArray);
-        console.log(newtext);
-    }
 
-    if(newArray.some(ele => ele == newtext)){
-        return true
-    }
-    return false
- 
+  let newtext;
+  if (str.slice(0, 2) == "1 ") {
+    str = str.replace("1 ", "");
+    console.log(str);
+    newtext = str.replace(/\d/g, "5");
+    console.log(newArray);
+    console.log(newtext);
+  } else if (str[0] == "1") {
+    str = str.replace("1", "");
+    console.log(str);
+    newtext = str.replace(/\d/g, "5");
+    console.log(newArray);
+    console.log(newtext);
+  } else {
+    newtext = str.replace(/\d/g, "5");
+    console.log(str);
+    console.log(newArray);
+    console.log(newtext);
+  }
+
+  if (newArray.some((ele) => ele == newtext)) {
+    return true;
+  }
+  return false;
 }
-  
-console.log( telephoneCheck( "1 123)456-7890") )
 
+console.log(telephoneCheck("1 123)456-7890"));
 
-
-
-
-// usando javascript, implemente una funcion que dado un numero entero, 
+// usando javascript, implemente una funcion que dado un numero entero,
 // retorne otro numero formado por sus mismos digitos ordenados descendenteme
 
 function descentOrder(num) {
-    const numstr = num.toString()
-    const numArr = numstr.split("").sort((a,b) => b  - a)
-    const fx = parseInt(numArr.join(""), 10)
-   
-    return fx
+  const numstr = num.toString();
+  const numArr = numstr.split("").sort((a, b) => b - a);
+  const fx = parseInt(numArr.join(""), 10);
+
+  return fx;
 }
 
-
-console.log(descentOrder(1023))
-
+console.log(descentOrder(1023));
 
 /* utilizando javascript, implementar un metodo que permita acceder de forma
    segura a propiedades de un objeto, incluso cuando dichas propiedades no existen.
@@ -1017,41 +883,38 @@ console.log(descentOrder(1023))
 
 */
 
-function safeGet(obj, defaultValue, path){
-    if(typeof path === undefined){
-        return (p) => safeGet(obj, defaultValue,p)
-    }
+function safeGet(obj, defaultValue, path) {
+  if (typeof path === undefined) {
+    return (p) => safeGet(obj, defaultValue, p);
+  }
 
-    const keys = path.split(".")
-    let current = obj
-    
-    for(const key of keys){
-        if(current && typeof current === 'object' && key in current){
-            current = current[key]
-        }else {
-            return defaultValue
-        }
-    }
-    return current
+  const keys = path.split(".");
+  let current = obj;
 
+  for (const key of keys) {
+    if (current && typeof current === "object" && key in current) {
+      current = current[key];
+    } else {
+      return defaultValue;
+    }
+  }
+  return current;
 }
 
 const obj = {
-    a: {
-        b : {
-            c:25,
-            d:null,
-            e:false
-        },
-        f:0
-    }
-}
+  a: {
+    b: {
+      c: 25,
+      d: null,
+      e: false,
+    },
+    f: 0,
+  },
+};
 
-console.log(safeGet(obj, 'default', 'a.b.c'))
+console.log(safeGet(obj, "default", "a.b.c"));
 
-
-
-console.log('***********************'.green);
+console.log("***********************".green);
 
 // Caja registradora
 
@@ -1093,184 +956,181 @@ la propiedad con el status en closed y una propiedad change que sera el mismo ar
 
 */
 
-
-
-
 function checkCashRegister(price, cash, cid) {
-    const copy = JSON.parse(JSON.stringify(cid))
-    const amount = {
-        "PENNY" : 0.01,
-        "NICKEL" : 0.05,
-        "DIME" : 0.1,
-        "QUARTER" : 0.25,
-        "ONE" : 1,
-        "FIVE" : 5,
-        "TEN" : 10,
-        "TWENTY" : 20,
-        "ONE HUNDRED" : 100
-    }
+  const copy = JSON.parse(JSON.stringify(cid));
+  const amount = {
+    PENNY: 0.01,
+    NICKEL: 0.05,
+    DIME: 0.1,
+    QUARTER: 0.25,
+    ONE: 1,
+    FIVE: 5,
+    TEN: 10,
+    TWENTY: 20,
+    "ONE HUNDRED": 100,
+  };
 
-    let change = cash - price
-    let storage = []
-    
-  
-    for(let i = cid.length - 1; i >= 0; i--){
-    
-        let valueCurrent = cid[i][0]
-        let amountCurrent = cid[i][1]
-      //  console.log(amountCurrent + 'valuecurrent'.bgGreen);
-        let availableQuantity = Math.round(amountCurrent/amount[valueCurrent])
-        let money = 0
+  let change = cash - price;
+  let storage = [];
 
-        while(change.toFixed(2) >= amount[valueCurrent] && availableQuantity >=1){
-           
-              change =  change.toFixed(2) - amount[valueCurrent]
-             
-              availableQuantity =  availableQuantity - 1
-              money+=amount[valueCurrent]
-           
-     
-              cid[i][1] = cid[i][1].toFixed(2) -  amount[valueCurrent]
-              
-           
-            if(storage.some((ele) => ele[0] === valueCurrent)){
-                storage = storage.map(ele => ele[0] === valueCurrent ? [ele[0], ele[1] = money] : ele)
-            }
-            
-            else{
-                storage.push([valueCurrent, money])
-            }
-           
-        }
+  for (let i = cid.length - 1; i >= 0; i--) {
+    let valueCurrent = cid[i][0];
+    let amountCurrent = cid[i][1];
+    //  console.log(amountCurrent + 'valuecurrent'.bgGreen);
+    let availableQuantity = Math.round(amountCurrent / amount[valueCurrent]);
+    let money = 0;
 
-    }
-    console.log(cid);
-    console.log(change);
-   
+    while (
+      change.toFixed(2) >= amount[valueCurrent] &&
+      availableQuantity >= 1
+    ) {
+      change = change.toFixed(2) - amount[valueCurrent];
 
-    if(change > 0){
-        return {status: "INSUFFICIENT_FUNDS", change: []}
+      availableQuantity = availableQuantity - 1;
+      money += amount[valueCurrent];
+
+      cid[i][1] = cid[i][1].toFixed(2) - amount[valueCurrent];
+
+      if (storage.some((ele) => ele[0] === valueCurrent)) {
+        storage = storage.map((ele) =>
+          ele[0] === valueCurrent ? [ele[0], (ele[1] = money)] : ele
+        );
+      } else {
+        storage.push([valueCurrent, money]);
+      }
     }
-    else if(cid.every(ele  => ele[1] <= 0)){
-  
-        return {status : 'CLOSED', change : copy}
-    }
-    return {status: "OPEN", change: storage}
+  }
+  console.log(cid);
+  console.log(change);
+
+  if (change > 0) {
+    return { status: "INSUFFICIENT_FUNDS", change: [] };
+  } else if (cid.every((ele) => ele[1] <= 0)) {
+    return { status: "CLOSED", change: copy };
+  }
+  return { status: "OPEN", change: storage };
 }
-  
 
-
-console.log(checkCashRegister(  50, 65, [["PENNY", 0], ["NICKEL", 0], ["DIME", 0], ["QUARTER", 0], ["ONE",0 ], ["FIVE", 5], ["TEN", 10], ["TWENTY", 0], ["ONE HUNDRED", 0]]  ))
-
-
-
-
-
+console.log(
+  checkCashRegister(50, 65, [
+    ["PENNY", 0],
+    ["NICKEL", 0],
+    ["DIME", 0],
+    ["QUARTER", 0],
+    ["ONE", 0],
+    ["FIVE", 5],
+    ["TEN", 10],
+    ["TWENTY", 0],
+    ["ONE HUNDRED", 0],
+  ])
+);
 
 // de entero a romano
 
-
 function convertToRoman(num) {
-    
-    const values =[1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5,  4, 1]
-    const romans =['M', 'CM', 'D', 'CD', 'C', 'XC', 'L', 'XL', 'X', 'IX', 'V',  'IV', 'I']
+  const values = [1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1];
+  const romans = [
+    "M",
+    "CM",
+    "D",
+    "CD",
+    "C",
+    "XC",
+    "L",
+    "XL",
+    "X",
+    "IX",
+    "V",
+    "IV",
+    "I",
+  ];
 
-    let res = ''
-    values.forEach((value, i) => {
-        while(num >= value){
-            res = res + romans[i]
-            num = num - value
-        }
-    })
+  let res = "";
+  values.forEach((value, i) => {
+    while (num >= value) {
+      res = res + romans[i];
+      num = num - value;
+    }
+  });
 
-    return res
-
-
+  return res;
 }
-   
-console.log(convertToRoman(36))
 
-
+console.log(convertToRoman(36));
 
 // de entero a romano 2
 
 function checkValue(valor) {
-    let numero = 0;
+  let numero = 0;
 
-       switch (valor) {
-        case 'I':
-        numero  += 1;        
-        break;
-        case 'V':
-        numero += 5;        
-        break;
-        case 'X':
-        numero += 10;        
-        break;
-        case 'L':
-        numero += 50;        
-        break;
-        case 'C':
-        numero += 100;        
-        break;
-        case 'D':
-        numero += 500;        
-        break;
-        case 'M':
-        numero += 1000;        
-        break    
-        default:
-          console.log('Hubo un error');
-          break;
-      }
+  switch (valor) {
+    case "I":
+      numero += 1;
+      break;
+    case "V":
+      numero += 5;
+      break;
+    case "X":
+      numero += 10;
+      break;
+    case "L":
+      numero += 50;
+      break;
+    case "C":
+      numero += 100;
+      break;
+    case "D":
+      numero += 500;
+      break;
+    case "M":
+      numero += 1000;
+      break;
+    default:
+      console.log("Hubo un error");
+      break;
+  }
 
-      return numero;
-
+  return numero;
 }
 
-
-
-var romanToInt = function(romano) {
-    let resultado = 0;
-    const letters = romano.split("");
-    letters.forEach((x, index) => {
-       if (index + 1 != letters.length){
-           if(checkValue(x) >= checkValue(letters[index+1])){
-              resultado += checkValue(x);
-           }else{
-              resultado -= checkValue(x);
-           }
-       }else {
-          resultado += checkValue(x);
-       }
-   });
-   return resultado;
+var romanToInt = function (romano) {
+  let resultado = 0;
+  const letters = romano.split("");
+  letters.forEach((x, index) => {
+    if (index + 1 != letters.length) {
+      if (checkValue(x) >= checkValue(letters[index + 1])) {
+        resultado += checkValue(x);
+      } else {
+        resultado -= checkValue(x);
+      }
+    } else {
+      resultado += checkValue(x);
+    }
+  });
+  return resultado;
 };
 
 //console.log(romanToInt('MMMMDCCCXXXVVIV'));
 
-
 // aplanar arreglos
 function arrayFlat(array) {
-    let concatenados = []
-    for(let i = 0; i < array.length; i++){
-       
-        if(Array.isArray(array[i])){
-            console.log(array[i], 'is array'.bgBlue);
-            concatenados =  [...concatenados, ...arrayFlat(array[i])]
-        }else{
-            concatenados = [...concatenados, array[i]] //concatenados.concat(array[i])
-            // [1,2,3]
-        }
+  let concatenados = [];
+  for (let i = 0; i < array.length; i++) {
+    if (Array.isArray(array[i])) {
+      console.log(array[i], "is array".bgBlue);
+      concatenados = [...concatenados, ...arrayFlat(array[i])];
+    } else {
+      concatenados = [...concatenados, array[i]]; //concatenados.concat(array[i])
+      // [1,2,3]
     }
-    return concatenados
+  }
+  return concatenados;
 }
 
-const arrayExample = [1,2,3,[4,5, [6,7, [8]], 9], 10]
-console.log(arrayFlat(arrayExample))
+const arrayExample = [1, 2, 3, [4, 5, [6, 7, [8]], 9], 10];
+console.log(arrayFlat(arrayExample));
 
-console.log('recursividaddddddddddddddd'.bgBlue);
-
+console.log("recursividaddddddddddddddd".bgBlue);
 
 // el siguiente algoritmo recursivo para calcular x^n
 
@@ -1288,69 +1148,58 @@ console.log('recursividaddddddddddddddd'.bgBlue);
 
 */
 
-ddd
-var isEven = function(n) {
-    return n % 2 === 0;
+var isEven = function (n) {
+  return n % 2 === 0;
 };
 
-var isOdd = function(n) {
-    return !isEven(n);
+var isOdd = function (n) {
+  return !isEven(n);
 };
 
-var power = function(x, n) {
-    console.log('entrando a recursiva ');
-    // base case
-    if(n ===0) {
+var power = function (x, n) {
+  console.log("entrando a recursiva ");
+  // base case
+  if (n === 0) {
     return 1;
-    }
-    if(n < 0){
-        console.log('negativo');
-        return 1/(x)
-    }
-     // recursive case: n is odd
-    if(isOdd(n)){
-        return x *  power(x, n-1);
-       
-    }
-    // recursive case: n is negative 
-    if (n < 0) {
-        return 1 / power(x, -n);
-    }
-    
-  
+  }
+  if (n < 0) {
+    console.log("negativo");
+    return 1 / x;
+  }
+  // recursive case: n is odd
+  if (isOdd(n)) {
+    return x * power(x, n - 1);
+  }
+  // recursive case: n is negative
+  if (n < 0) {
+    return 1 / power(x, -n);
+  }
 
-    // recursive case: n is even
-    if(isEven(n)){
-        var y = power(x, n / 2);
-        return y * y;
-       /*  var y =(Math.floor((n)/2)); 
+  // recursive case: n is even
+  if (isEven(n)) {
+    var y = power(x, n / 2);
+    return y * y;
+    /*  var y =(Math.floor((n)/2)); 
         return x * power(x, y); */
-       
-    }
+  }
 };
 
 /* console.log(power(3,0))
 console.log(power(3,1)) */
-console.log(power(3,-1))
-
+console.log(power(3, -1));
 
 // console.log(Math.floor(1/2));
 
 // calcula la potencia de un numero de forma recursiva
 
 // caso 2
-function pow(number, powNumber){
-    
-    if(powNumber === 0){
-        return 1
-    }
-    console.log('entrando');
-    return number * pow(number, powNumber -1)
-
-    
+function pow(number, powNumber) {
+  if (powNumber === 0) {
+    return 1;
+  }
+  console.log("entrando");
+  return number * pow(number, powNumber - 1);
 }
 // console.log(pow(3,2))
 
 /* console.log(2**1 * 2**1 * 2**1 * 2**1 * 2**1 * 2**1); */
-
-
