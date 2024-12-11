@@ -1,7 +1,7 @@
 /* import colors from "colors"; */
 
 // primer ejercicio
-(() => {
+() => {
   /*nos piden encontrar el primer numero repetido en la secuencia  de
     un arreglo en caso no hubiera numeros retornar -1
     ejemplo : const giftIds = [2, 1, 3, 5, 3, 2]
@@ -32,10 +32,10 @@
 
   const giftIds = [5, 1, 5, 1];
   console.log(findFirstRepeated(giftIds));
-})();
+};
 
 // segundo ejercicio
-(() => {
+() => {
   /*el ejercicio consiste en : dado un listado de regalos y una serie
     de materiales devolver un arreglo con los regalos que se pueden 
     fabricar con los materiales disponibles 
@@ -84,10 +84,10 @@
   }
   console.log(manufacture(["libro", "ps5"], "psli"));
   console.log(manufacture(["tren", "oso", "pelota"], "tronesa"));
-})();
+};
 
 // tercer ejercicio
-(() => {
+() => {
   /*el ejercicio se trata de : dada 2 cadenas de texto la primera 
     cadena es la original y la segunda la modificada devolver el 
     caracter extra o faltante que pueda haber entre dichas cadenas 
@@ -122,10 +122,10 @@
   console.log(findNaughtyStep("xxxx", "xxoxx"));
   console.log(findNaughtyStep("abecd", "abcd"));
   console.log(findNaughtyStep("abcd", "abcde"));
-})();
+};
 
 // cuarto ejercicio
-(() => {
+() => {
   /*el ejercicio consta en : crear una funcion que dada una cadena de 
     texto elimine los parentesis de dicha cadena e invierta los caracteres
     que esten dentro de esos parentesis
@@ -181,9 +181,9 @@
     return char;
   }
 
-  console.log(decode("sa(u(cla)atn)s"));
+  /*   console.log(decode("sa(u(cla)atn)s"));
   console.log(decode("hola (o(d)(n)um)"));
-  console.log(decode("(olleh) (dlrow)!"));
+  console.log(decode("(olleh) (dlrow)!")); */
 
   // segunda forma de solucionarlo
 
@@ -231,14 +231,14 @@
     }
     return message;
   }
-  console.log(decodeTwo("sa(u(cla)atn)s"));
+  /*   console.log(decodeTwo("sa(u(cla)atn)s"));
   console.log(decodeTwo("hola (o((d))(n)um)"));
   console.log(decodeTwo("(olleh) (dlrow)!"));
-  console.log(decodeTwo("(((((aloh)))))  (o(((ig)))ma)"));
-})();
+  console.log(decodeTwo("(((((aloh)))))  (o(((ig)))ma)")); */
+};
 
 // quinto ejercicio
-(() => {
+() => {
   /*el cyber truck de santa , Santa 🎅 está probando su nuevo trineo
     eléctrico, el CyberReindeer, en una carretera del Polo Norte. La
     carretera se representa con una cadena de caracteres, donde:
@@ -314,5 +314,217 @@
   }
   const road = "S..|...|..";
   const time = 10;
-  console.log(cyberReindeer(road, time));
+  //console.log(cyberReindeer(road, time));
+};
+
+() => {
+  // primer regalo repetido
+  /* Santa Claus 🎅 ha recibido una lista de números mágicos que representan regalos 🎁, pero algunos de ellos están duplicados y deben ser eliminados para evitar confusiones. Además, los regalos deben ser ordenados en orden ascendente antes de entregárselos a los elfos.
+
+Tu tarea es escribir una función que reciba una lista de números enteros (que pueden incluir duplicados) y devuelva una nueva lista sin duplicados, ordenada en orden ascendente.
+ ejemplo : const gifts1 = [3, 1, 2, 3, 4, 2, 5]
+const preparedGifts1 = prepareGifts(gifts1)
+console.log(preparedGifts1) // [1, 2, 3, 4, 5]
+ */
+
+  // primer solucion
+  const gifts = [3, 1, 2, 3, 4, 2, 5];
+  const gifts1 = [6, 5, 5, 5, 5, -1, -1];
+  function prepareGifts(gifts) {
+    const newSet = new Set(gifts);
+    return [...newSet].sort((a, b) => a - b);
+  }
+
+  //console.log(prepareGifts(gifts));
+
+  // segunda solucion aplicando merge sort
+
+  function mergeSort(array, min, max) {
+    // primero evaluamos caso base
+    if (min < max) {
+      // bisecar el array y llamar recursivamente
+      let half = Math.floor((min + max) / 2);
+      mergeSort(array, min, half);
+      mergeSort(array, half + 1, max);
+      merge(array, min, half, max);
+    }
+    return array;
+  }
+
+  function merge(array, min, half, max) {
+    let tempo = [];
+    let left = min;
+    let right = half + 1;
+    let repeat = 0;
+    // iterar siempre y cuando el minimo y el maximo no superen su limite permitido
+
+    while (left <= half && right <= max) {
+      // primero corroborar si alguno de estos es un caracter 'X'
+      if (array[left] == "x") {
+        // si es asi quiere decir que es el ultimo elemento de esa porcion y
+        // no deberia ser comparado con otro de otra porcion
+        // luego aumentamos nuestra variable repeat en la cantidad de elementos sobrantes que aun no se iteran
+        // tambien aumentar left lo igualamos a half ya que no hay mas que iterar
+        repeat += half - left + 1;
+        left = half + 1;
+        break;
+      } else if (array[right] == "x") {
+        // si es asi quiere decir que es el ultimo elemento de esa porcion y
+        // no deberia ser comparado con otro de otra porcion
+        repeat += max - right + 1;
+        right = max + 1;
+        break;
+      }
+      // si son iguales deberia ignorar uno de ellos
+      if (array[left] == array[right]) {
+        tempo.push(array[left]);
+        left++;
+        right++;
+        repeat++;
+      }
+
+      // comparar
+      else if (array[left] < array[right]) {
+        tempo.push(array[left]);
+        left++;
+      } else {
+        tempo.push(array[right]);
+        right++;
+      }
+    }
+
+    // luego insertar el remanente de cualquiera de los 2 arreglos en el tempo
+    while (left <= half) {
+      tempo.push(array[left]);
+      left++;
+    }
+
+    while (right <= max) {
+      tempo.push(array[right]);
+      right++;
+    }
+
+    // bucle final
+    while (repeat >= 1) {
+      tempo.push("x");
+      repeat--;
+    }
+
+    // luego copiar lo de el arreglo temporal al arreglo original
+
+    for (let i = min; i <= max; i++) {
+      array[i] = tempo[i - min];
+    }
+  }
+
+  const ar = mergeSort(gifts, 0, gifts.length - 1);
+  while (ar[ar.length - 1] == "x") {
+    ar.pop();
+  }
+  console.log(ar);
+};
+
+() => {
+  // enmarcando nombres
+  /*
+
+      Santa Claus 🎅 quiere enmarcar los nombres de los niños buenos para decorar su taller 🖼️, pero el marco debe cumplir unas reglas específicas. Tu tarea es ayudar a los elfos a generar este marco mágico.
+
+    Reglas:
+
+    Dado un array de nombres, debes crear un marco rectangular que los contenga a todos.
+    Cada nombre debe estar en una línea, alineado a la izquierda.
+    El marco está construido con * y tiene un borde de una línea de ancho.
+    La anchura del marco se adapta automáticamente al nombre más largo más un margen de 1 espacio a cada lado.
+    Ejemplo de funcionamiento:
+
+    *******
+    * a   *
+    * bb  *
+    * ccc *
+    ******* 
+   createFrame(['a', 'bb', 'ccc'])
+  */
+
+  function createFrame(names) {
+    let ar = [];
+    const maxChar = names.reduce((a, b) => (a.length > b.length ? a : b));
+
+    for (let char of names) {
+      let firstChar = `* ${char}`;
+      ar.push(
+        `${
+          firstChar +
+          " ".repeat(maxChar.length + 4 - firstChar.length - 1) +
+          "*"
+        }`
+      );
+    }
+    ar.unshift("*".repeat(maxChar.length + 4));
+    ar.push("*".repeat(maxChar.length + 4));
+    return ar.join("\n");
+  }
+
+  console.log(createFrame(["midu", "madeval", "educalvolpz"]));
+};
+
+(() => {
+  // organizando el inventario
+
+  /* 
+    Santa Claus 🎅 está revisando el inventario de su taller para preparar la entrega de regalos. Los elfos han registrado los juguetes en un array de objetos, pero la información está un poco desordenada. Necesitas ayudar a Santa a organizar el inventario.
+
+Recibirás un array de objetos, donde cada objeto representa un juguete y tiene las propiedades:
+
+name: el nombre del juguete (string).
+quantity: la cantidad disponible de ese juguete (entero).
+category: la categoría a la que pertenece el juguete (string).
+Escribe una función que procese este array y devuelva un objeto que organice los juguetes de la siguiente manera:
+
+Las claves del objeto serán las categorías de juguetes.
+Los valores serán objetos que tienen como claves los nombres de los juguetes y como valores las cantidades totales de cada juguete en esa categoría.
+Si hay juguetes con el mismo nombre en la misma categoría, debes sumar sus cantidades.
+Si el array está vacío, la función debe devolver un objeto vacío {}.  
+  ejemplo :const inventory2 = [
+  { name: 'book', quantity: 10, category: 'education' },
+  { name: 'book', quantity: 5, category: 'education' },
+  { name: 'paint', quantity: 3, category: 'art' }
+]
+
+organizeInventory(inventory2)
+
+// Resultado esperado:
+// {
+//   education: {
+//     book: 15
+//   },
+//   art: {
+//     paint: 3
+//   }  
+
+*/
+
+  const inventory = [
+    { name: "book", quantity: 10, category: "education" },
+    { name: "book", quantity: 5, category: "education" },
+    { name: "paint", quantity: 3, category: "art" },
+  ];
+
+  function organizeInventory(inventory) {
+    let ob = {};
+    for (let ele of inventory) {
+      if ([ele["category"]] in ob) {
+        ele["name"] in ob[ele["category"]]
+          ? (ob[ele["category"]][ele["name"]] += ele["quantity"])
+          : (ob[ele["category"]][ele["name"]] = ele["quantity"]);
+      } else {
+        ob[ele["category"]] = {
+          [ele["name"]]: ele["quantity"],
+        };
+      }
+    }
+    return ob;
+  }
+
+  console.log(organizeInventory(inventory));
 })();
