@@ -316,7 +316,7 @@
   const time = 10;
   //console.log(cyberReindeer(road, time));
 };
-
+//
 () => {
   // primer regalo repetido
   /* Santa Claus 🎅 ha recibido una lista de números mágicos que representan regalos 🎁, pero algunos de ellos están duplicados y deben ser eliminados para evitar confusiones. Además, los regalos deben ser ordenados en orden ascendente antes de entregárselos a los elfos.
@@ -468,7 +468,7 @@ console.log(preparedGifts1) // [1, 2, 3, 4, 5]
   console.log(createFrame(["midu", "madeval", "educalvolpz"]));
 };
 
-(() => {
+() => {
   // organizando el inventario
 
   /* 
@@ -527,4 +527,237 @@ organizeInventory(inventory2)
   }
 
   console.log(organizeInventory(inventory));
+};
+
+() => {
+  /* 
+  ¡Es hora de poner el árbol de Navidad en casa! 🎄 Pero este año queremos que sea especial. Vamos a crear una función que recibe la altura del árbol (un entero positivo entre 1 y 100) y un carácter especial para decorarlo.
+
+  La función debe devolver un string que represente el árbol de Navidad, construido de la siguiente manera:
+  
+  El árbol está compuesto de triángulos de caracteres especiales.
+  Los espacios en blanco a los lados del árbol se representan con guiones bajos _.
+  Todos los árboles tienen un tronco de dos líneas, representado por el carácter #.
+  El árbol siempre debe tener la misma longitud por cada lado.
+  Debes asegurarte de que el árbol tenga la forma correcta usando saltos de línea \n para cada línea.
+  ejemplo : 
+  const tree = createXmasTree(5, '*')
+console.log(tree)
+ 
+    ____*____
+    ___***___
+    __*****__
+    _*******_
+    *********
+    ____#____
+    ____#____
+*/
+  /* pseudocodigo
+    - primero calculamos la longitud total del arbol + los espacios esta sera la altura*2 - 1
+    - luego creamos un arreglo que contenga todas las los registro, cada elemento sera una fila del arbol
+    - en cada iteracion el caracter especial aumentara en 2 
+    -  los espacios de cada fila se determinaran por esta formula => 
+    ((altura*2 - 1) - la longitud del caracter especial)/2, entre 2 por que 
+    dividiremos los espacios para el lado izquierdo y derecho
+    - repetimos el ciclo hasta llegar a la altura maxima
+
+    - al final independientemente de la altura insertamos  la base con la misma formula que los demas registro
+    solo que esta vez la longitud del caracter especial sera 1
+
+  */
+
+  function createXmasTree(height, ornament) {
+    const lengthTree = height * 2 - 1;
+    let charSpecial = 1;
+    let finalChar = "";
+    for (let i = 0; i < height; i++) {
+      let spaces = (lengthTree - charSpecial) / 2;
+      let char = `${
+        "_".repeat(spaces) +
+        ornament.repeat(charSpecial) +
+        "_".repeat(spaces) +
+        "\n"
+      }`;
+      finalChar += char;
+      charSpecial += 2;
+    }
+    finalChar += `${
+      "_".repeat((lengthTree - 1) / 2) +
+      "#" +
+      "_".repeat((lengthTree - 1) / 2) +
+      "\n"
+    }`;
+    finalChar += `${
+      "_".repeat((lengthTree - 1) / 2) + "#" + "_".repeat((lengthTree - 1) / 2)
+    }`;
+    return finalChar;
+  }
+
+  const tree = createXmasTree(5, "*");
+  console.log(tree);
+  // console.log("__*__\n_***_\n*****\n__#__\n__#__");
+};
+
+() => {
+  /* Los elfos 🧝🧝‍♂️ de Santa Claus han encontrado un montón de botas mágicas desordenadas en el taller. Cada bota se describe por dos valores:
+
+  type indica si es una bota izquierda (I) o derecha (R).
+  size indica el tamaño de la bota.
+  Tu tarea es ayudar a los elfos a emparejar todas las botas del mismo tamaño que tengan izquierda y derecha. Para ello, debes devolver una lista con los pares disponibles después de emparejar las botas.
+
+  ¡Ten en cuenta que puedes tener más de una zapatilla emparejada del mismo tamaño! 
+
+  ejemplo : 
+  const shoes = [
+    { type: 'I', size: 38 },
+    { type: 'R', size: 38 },
+    { type: 'R', size: 42 },
+    { type: 'I', size: 41 },
+    { type: 'I', size: 42 }
+  ]
+
+  organizeShoes(shoes)
+  // [38, 42]
+
+  pseudocodigo : 
+  - crear una estructura que contenga el recuento de todos los pares (puede ser un map)
+  - crear un arreglo contenedor de las tallas de zapatillas
+  - recorrer el arreglo que me dan
+  - en cada iteracion comprobar si el size existe como propiedad de mi estructura
+  - si no existe creo la propiedad donde la clave sera el size y el valor un objeto con 2 propiedades y dependiendo de que type sea el elemento recorrido establesco alguna de esas propiedades en 1 y la otra en cero => {I : 0, R : 1 }
+  - si el size si existe como propiedad entonces se entiende que el objeto con las 2 propiedades existe = {I : 0, R : 1 } y dependiendo del type solo le sumamos lo que ya tenia + 1 
+  - por ejemplo si el type es I(sabemos que ya tenemos 1 de ese tipo de antemano) y comprobamos si el type R(opuesto) es mayor a 0 si es asi quiere decir que tenemos un par encontrado y solo restamos 1  a R y pusheamos el size al arreglo contenedor y repetimos el ciclo
+*/
+  /* const newMap = new Map([
+    [34, { I: 2, R: 10 }],
+    [35, { I: 2, R: 10 }],
+  ]);
+  console.log(newMap); */
+  function organizeShoes(shoes) {
+    const newMap = new Map();
+    const totalSizes = [];
+    for (let i = 0; i < shoes.length; i++) {
+      if (newMap.has(shoes[i].size)) {
+        let opuesto = shoes[i].type == "I" ? "R" : "I";
+        const res = newMap.get(shoes[i].size);
+        if (res[opuesto] > 0) {
+          res[opuesto]--;
+          totalSizes.push(shoes[i].size);
+        } else {
+          res[shoes[i].type] += 1;
+        }
+      } else {
+        newMap.set(shoes[i].size, { I: 0, R: 0, [shoes[i]["type"]]: 1 });
+      }
+    }
+
+    return totalSizes;
+  }
+
+  const shoes = [
+    { type: "I", size: 38 }, // =>i =  1
+    { type: "R", size: 38 }, // => r = 1
+    { type: "R", size: 42 }, // => r = 2
+    { type: "I", size: 41 }, // => i = 2
+    { type: "I", size: 42 }, // => i = 3
+  ];
+
+  console.log(organizeShoes(shoes));
+};
+
+() => {
+  /* 
+  Ya hemos empaquetado cientos de regalos 🎁… pero a un elfo se le ha olvidado revisar si el regalo, representado por un asterisco *, está dentro de la caja.
+
+La caja tiene un regalo (*) y cuenta como dentro de la caja si:
+
+Está rodeada por # en los bordes de la caja.
+El * no está en los bordes de la caja.
+Ten en cuenta entonces que el * puede estar dentro, fuera o incluso no estar. Y debemos devolver true si el * está dentro de la caja y false en caso contrario. 
+  ejemplo : 
+  inBox([
+    "###",
+    "#*#",
+    "###"
+  ]) // ➞ true
+
+  pseudocodigo :
+  - primero creamos una variable en false
+  - luego recorremos el array omitiendo el primer y ultimo elemento
+  - ya que si el asterisco llegase a estar en uno de esos registros sea cual sea su posicion ya estaria en el borde y deberemos retornar false
+  - luego en cada iteracion comprobamos si hay un * en la cadena
+  que se esta recorriendo
+  - si no esta, solo seguimos avanzando
+  - si esta 
+    - lo que hacemos sera sacar la primer y la ultima posicion del #(que deberia representar el borde) 
+    - luego comprobamos si la posicion del * esta entre ese rango numerico
+    - por ejemplo si el primer y el ultimo borde estan en la posicion 0 y 4 respectivamente entonces nuestro * debe estar entre la posicion 1 y 3 ya que este no puede estar en el borde
+    - despues finalizamos el bucle 
+
+*/
+
+  function inBox(box) {
+    for (let i = 1; i < box.length - 1; i++) {
+      let positionAst = box[i].indexOf("*");
+      if (positionAst >= 0) {
+        let firstPosition = box[i].indexOf("#");
+        let lastPosition = box[i].lastIndexOf("#");
+        if (positionAst > firstPosition && positionAst < lastPosition) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
+  console.log(inBox(["###", "###", "#*#"]));
+};
+
+(() => {
+  /* ¡El grinch 👹 ha pasado por el taller de Santa Claus! Y menudo desastre ha montado. Ha cambiado el orden de algunos paquetes, por lo que los envíos no se pueden realizar.
+
+Por suerte, el elfo Pheralb ha detectado el patrón que ha seguido el grinch para desordenarlos. Nos ha escrito las reglas que debemos seguir para reordenar los paquetes. Las instrucciones que siguen son:
+
+Recibirás un string que contiene letras y paréntesis.
+Cada vez que encuentres un par de paréntesis, debes voltear el contenido dentro de ellos.
+Si hay paréntesis anidados, resuelve primero los más internos.
+Devuelve el string resultante con los paréntesis eliminados, pero con el contenido volteado correctamente.
+Nos ha dejado algunos ejemplos: 
+
+fixPackages('a(b(c))e')
+// ➞ "acbe"
+// 1º volteamos "c" → "c", luego "bc" → "cb"
+
+  pseudocodigo : 
+  - primero obtenemos los primeros indices(posiciones) de los parentesis
+    - si existen dichas posiciones, llamamos recursivamente a la funcion pero
+    la pasandole la porcion recortada, que sera desde una posicion mas que 
+    "(" y una posicion menos que ")"
+    - en caso no existan indices para los parentesis quiere decir que llegamos al caso base
+    - entonces deberiamos retornar la cadena, pero volteada y eliminando los 
+    parentesis que los preceden
+
+
+
+
+*/
+
+  function fixPackages(packages) {
+    let firstIndex = packages.indexOf("(");
+    let lastIndex = packages.lastIndexOf(")");
+    if (firstIndex >= 0 && lastIndex >= 0) {
+      let char = fixPackages(packages.slice(firstIndex + 1, lastIndex));
+      char = char.split("").reverse().join("");
+      packages =
+        packages.slice(0, firstIndex) + char + packages.slice(lastIndex + 1);
+      return packages;
+    } else {
+      return packages;
+    }
+    //return packages;
+  }
+
+  // console.log(fixPackages("a(cb)de")); // ➞ "abcde"
+  console.log(fixPackages("a(bc(def)g)h")); // ➞ "agdefcbh"
+  // console.log(fixPackages("abc(def(gh)i)jk")); // ➞ "abcighfedjk"
 })();
