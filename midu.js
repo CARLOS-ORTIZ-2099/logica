@@ -713,7 +713,7 @@ Ten en cuenta entonces que el * puede estar dentro, fuera o incluso no estar. Y 
   console.log(inBox(["###", "###", "#*#"]));
 };
 
-(() => {
+() => {
   /* ¡El grinch 👹 ha pasado por el taller de Santa Claus! Y menudo desastre ha montado. Ha cambiado el orden de algunos paquetes, por lo que los envíos no se pueden realizar.
 
 Por suerte, el elfo Pheralb ha detectado el patrón que ha seguido el grinch para desordenarlos. Nos ha escrito las reglas que debemos seguir para reordenar los paquetes. Las instrucciones que siguen son:
@@ -743,6 +743,7 @@ fixPackages('a(b(c))e')
 */
 
   function fixPackages(packages) {
+    if (!packages.includes("(")) return packages;
     let firstIndex = packages.indexOf("(");
     let lastIndex = packages.lastIndexOf(")");
     if (firstIndex >= 0 && lastIndex >= 0) {
@@ -754,10 +755,270 @@ fixPackages('a(b(c))e')
     } else {
       return packages;
     }
-    //return packages;
+  }
+  console.log(fixPackages("a(cb)de")); // ➞ "abcde" (¿tu código lo pasa?)
+  console.log(fixPackages("a(bc(def)g)h")); // ➞ "agdefcbh" (¿funciona en este caso?)
+  console.log(fixPackages("abc(def(gh)i)jk")); // ➞ "abcighfedjk" (¿y este?)
+};
+
+() => {
+  /* ¡Es hora de seleccionar a los renos más rápidos para los viajes de Santa! 🦌🎄
+Santa Claus ha organizado unas emocionantes carreras de renos para decidir cuáles están en mejor forma.
+
+Tu tarea es mostrar el progreso de cada reno en una pista de nieve en formato isométrico.
+
+La información que recibes: 
+indices: Un array de enteros que representan el progreso de cada reno en la pista:
+0: El carril está vacío.
+Número positivo: La posición actual del reno desde el inicio de la pista.
+Número negativo: La posición actual del reno desde el final de la pista.
+length: La longitud de cada carril.
+Devuelve un string que represente la pista de la carrera:
+
+Cada carril tiene exactamente length posiciones llenas de nieve (~).
+Cada reno se representa con la letra r.
+Los carriles están numerados al final con /1, /2, etc.
+La vista es isométrica, por lo que los carriles inferiores están desplazados hacia la derecha.
+  ejemplo : drawRace([0, 5, -3], 10)
+
+*/
+  function drawRace(indices, length) {
+    let char = "";
+    for (let i = 0; i < indices.length; i++) {
+      let space = " ".repeat(indices.length - 1 - i);
+      let tempo = ``;
+      if (indices[i] > 0) {
+        tempo = `${"~".repeat(indices[i])}r`;
+        char += `${space}${tempo}${"~".repeat(length - tempo.length)} /${
+          i + 1
+        }\n`;
+      } else if (indices[i] < 0) {
+        tempo = `${"~".repeat(length - parseInt(-indices[i]))}r`;
+        char += `${space}${tempo}${"~".repeat(length - tempo.length)} /${
+          i + 1
+        }\n`;
+      } else {
+        char += `${space}${"~".repeat(length)} /${i + 1}\n`;
+      }
+    }
+    return char.trimEnd();
+  }
+  console.log(drawRace([0, 5, -3], 10));
+};
+
+() => {
+  /* Los elfos están jugando con un tren 🚂 mágico que transporta regalos. Este tren se mueve en un tablero representado por un array de strings.
+
+El tren está compuesto por una locomotora (@), seguida de sus vagones (o), y debe recoger frutas mágicas (*) que le sirve de combustible. El movimiento del tren sigue las siguientes reglas:
+
+Recibirás dos parámetros board y mov.
+
+board es un array de strings que representa el tablero:
+
+@ es la locomotora del tren.
+o son los vagones del tren.
+* es una fruta mágica.
+· son espacios vacíos.
+mov es un string que indica el próximo movimiento del tren desde la cabeza del tren @:
+
+'L': izquierda
+'R': derecha
+'U': arriba
+'D': abajo.
+Con esta información, debes devolver una cadena de texto:
+
+'crash': Si el tren choca contra los bordes del tablero o contra sí mismo.
+'eat': Si el tren recoge una fruta mágica (*).
+'none': Si avanza sin chocar ni recoger ninguna fruta mágica.
+Ejemplo: 
+
+const board = [
+  '·····',
+  '*····',
+  '@····',
+  'o····',
+  'o····'
+]
+
+console.log(moveTrain(board, 'U'))
+// ➞ 'eat'
+// Porque el tren se mueve hacia arriba y encuentra una fruta mágica
+
+  
+*/
+  /* pseudocodigo :
+    - primero recorreremos el arreglo 
+   
+    - por cada elemento(representado por subarreglos) iterado preguntar si la cabeza del tren esta incluido en ese nivel (subarreglo) sacamos su indice indice_actual_tren del subarreglo iterado
+    - si no esta incluido seguimos
+   
+    - si esta incluido lo que hacemos es : 
+     
+    - comprobar el valor del segundo parametro
+      - si es U o D trabajamos con la coordenada Y
+        - por ejemplo si el valor del segundo parametro es U subimos un nivel
+          por encima de la cabeza del tren
+        - por ejemplo si el valor del segundo parametro es D bajamos un
+          nivel por debajo de la cabeza del tren  
+          
+          - independientemente de donde nos movamos siempre debemos preguntar si :
+          
+            - array[nivel_actual-U][indice_actual_tren] //subida
+            || array[nivel_actual+D][indice_actual_tren] // bajada
+            = undefined O es igual a ° si es asi quiere decir que ya no hay mas niveles ya sea para subir o bajar o la posicion esta ocupada por un vagon y el tren habra chocado devolvemos crash
+
+            - si array[nivel_actual-U][indice_actual_tren] //subida
+            || array[nivel_actual+D][indice_actual_tren] // bajada
+            = * indica que encontramos una fruta magica devolvemos eat
+
+            - si no se cumple ninuna de las anteriores devolvemos none
+
+      - si es L o R trabajamos con la coordenada X
+        - por ejemplo si el valor del segundo parametro es L nos quedamos en el mismo nivel pero retrocedemos una posicion a la izquierda de la cabeza del tren
+        - por ejemplo si el valor del segundo parametro es R nos quedamos en el mismo nivel pero avanzamos una posicion a la derecha de la cabeza del tren
+
+        - independientemente de donde nos movamos siempre debemos preguntar si : 
+          - array[nivel_actual-L] // izquierda
+            || array[nivel_actual+R] // derecha
+          = undefined O es igual a ° si es asi quiere decir que ya no hay mas posiciones ya sea para izquierda o derecha o la pasicion esta ocupada por un vagon y el tren habra chocado devolvemos crash  
+
+          - si array[nivel_actual-L] // izquierda
+            || array[nivel_actual+R] // derecha
+          = * indica que encontramos una fruta magica devolvemos eat
+
+          - si no se cumple ninuna de las anteriores devolvemos none
+    
+  */
+  const board = ["·····", "*····", "@····", "o····", "o····"];
+
+  // primer solucion
+  function moveTrain(board, mov) {
+    const container = { X: { L: -1, R: 1 }, Y: { D: 1, U: -1 } };
+
+    for (let i = 0; i < board.length; i++) {
+      let indice_tren = board[i].indexOf("@");
+      if (indice_tren >= 0) {
+        if (mov in container["X"]) {
+          if (
+            board[i][indice_tren + container["X"][mov]] == undefined ||
+            board[i][indice_tren + container["X"][mov]] == "o"
+          ) {
+            return "crash";
+          } else if (board[i][indice_tren + container["Y"][mov]] == "*") {
+            return "eat";
+          }
+          return "none";
+        } else {
+          if (
+            board[i + container["Y"][mov]]?.[indice_tren] == undefined ||
+            board[i + container["Y"][mov]]?.[indice_tren] == "o"
+          ) {
+            return "crash";
+          } else if (board[i + container["Y"][mov]]?.[indice_tren] == "*") {
+            return "eat";
+          }
+          return "none";
+        }
+      }
+    }
   }
 
-  // console.log(fixPackages("a(cb)de")); // ➞ "abcde"
-  console.log(fixPackages("a(bc(def)g)h")); // ➞ "agdefcbh"
-  // console.log(fixPackages("abc(def(gh)i)jk")); // ➞ "abcighfedjk"
+  //console.log(moveTrain(board, "D"));
+
+  // segunda solucion
+
+  function moveTrain1(board, mov) {
+    let char = board.join("|");
+    let longLevel = board[0].length;
+    let indexTren = char.indexOf("@");
+    let data = { "*": "eat", "|": "crash", o: "crash", undefined: "crash" };
+    let icon;
+    if (mov == "U") {
+      icon = char[indexTren - (longLevel + 1)];
+    } else if (mov == "D") {
+      icon = char[indexTren + (longLevel + 1)];
+    } else if (mov == "L") {
+      icon = char[indexTren - 1];
+    } else if (mov == "R") {
+      icon = char[indexTren + 1];
+    }
+
+    return data?.[icon] || "none";
+  }
+
+  console.log(moveTrain1(board, "R"));
+};
+
+(() => {
+  /* Los elfos programadores están creando un pequeño ensamblador mágico para controlar las máquinas del taller de Santa Claus.
+
+Para ayudarles, vamos a implementar un intérprete sencillo que soporte las siguientes instrucciones mágicas:
+
+MOV x y: Copia el valor x (puede ser un número o el contenido de un registro) en el registro y
+INC x: Incrementa en 1 el contenido del registro x
+DEC x: Decrementa en 1 el contenido del registro x
+JMP x y: Si el valor del registro x es 0 entonces salta a la instrucción en el índice y y sigue ejecutándose el programa desde ahí.
+Comportamiento esperado:
+Si se intenta acceder, incrementar o decrementar a un registro que no ha sido inicializado, se tomará el valor 0 por defecto.
+El salto con JMP es absoluto y lleva al índice exacto indicado por y.
+Al finalizar, el programa debe devolver el contenido del registro A. Si A no tenía un valor definido, retorna undefined.
+
+  ejemplo : 
+  const instructions = [
+  'MOV -1 C', // copia -1 al registro 'C',
+  'INC C', // incrementa el valor del registro 'C'
+  'JMP C 1', // salta a la instrucción en el índice 1 si 'C' es 0
+  'MOV C A', // copia el registro 'C' al registro 'a',
+  'INC A' // incrementa el valor del registro 'a'
+]
+
+compile(instructions) // -> 2
+
+
+ Ejecución paso a paso:
+ 0: MOV -1 C -> El registro C recibe el valor -1
+ 1: INC C    -> El registro C pasa a ser 0
+ 2: JMP C 1  -> C es 0, salta a la instrucción en el índice 1
+ 1: INC C    -> El registro C pasa a ser 1
+ 2: JMP C 1  -> C es 1, ignoramos la instrucción
+ 3: MOV C A  -> Copiamos el registro C en A. Ahora A es 1
+ 4: INC A    -> El registro A pasa a ser 2
+ 
+
+*/
+  const instructions = [
+    "MOV -1 C", // copia -1 al registro 'C',
+    "INC C", // incrementa el valor del registro 'C'
+    "JMP C 1", // salta a la instrucción en el índice 1 si 'C' es 0
+    "MOV C A", // copia el registro 'C' al registro 'a',
+    "INC A", // incrementa el valor del registro 'a'
+  ];
+
+  const instructions1 = ["MOV 2 X", "DEC X", "DEC X", "JMP X 1", "MOV X A"];
+  const instructions2 = ["INC C", "DEC B", "MOV C Y", "INC Y"];
+  function compile(instructions) {
+    let register = {};
+    let index = 0;
+    while (index < instructions.length) {
+      let split = instructions[index].split(" ");
+      if (split[0] == "INC") {
+        split[1] in register ? register[split[1]]++ : (register[split[1]] = 1);
+      } else if (split[0] == "DEC") {
+        split[1] in register ? register[split[1]]-- : (register[split[1]] = -1);
+      } else if (split[0] == "MOV") {
+        split[1] in register
+          ? (register[split[2]] = register[split[1]])
+          : (register[split[2]] = split[1]);
+      } else if (split[0] == "JMP") {
+        if (register[split[1]] == 0) {
+          index = split[2];
+          continue;
+        }
+      }
+      index++;
+    }
+    return register;
+  }
+
+  console.log(compile(instructions2));
 })();
