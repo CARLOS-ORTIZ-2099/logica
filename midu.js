@@ -949,7 +949,7 @@ console.log(moveTrain(board, 'U'))
   console.log(moveTrain1(board, "R"));
 };
 
-(() => {
+() => {
   /* Los elfos programadores están creando un pequeño ensamblador mágico para controlar las máquinas del taller de Santa Claus.
 
 Para ayudarles, vamos a implementar un intérprete sencillo que soporte las siguientes instrucciones mágicas:
@@ -1021,4 +1021,378 @@ compile(instructions) // -> 2
   }
 
   console.log(compile(instructions2));
-})();
+};
+
+() => {
+  /* El Grinch ha hackeado 🏴‍☠️ los sistemas del taller de Santa Claus y ha codificado los nombres de todos los archivos importantes. Ahora los elfos no pueden encontrar los archivos originales y necesitan tu ayuda para descifrar los nombres.
+
+Cada archivo sigue este formato:
+
+Comienza con un número (puede contener cualquier cantidad de dígitos).
+Luego tiene un guion bajo _.
+Continúa con un nombre de archivo y su extensión.
+Finaliza con una extensión extra al final (que no necesitamos).
+Ten en cuenta que el nombre de los archivos pueden contener letras (a-z, A-Z), números (0-9), otros guiones bajos (_) y guiones (-).
+
+Tu tarea es implementar una función que reciba un string con el nombre de un archivo codificado y devuelva solo la parte importante: el nombre del archivo y su extensión.
+  ejemplo : 
+  decodeFilename('2023122512345678_sleighDesign.png.grinchwa')
+  // ➞ "sleighDesign.png"
+
+  decodeFilename('42_chimney_dimensions.pdf.hack2023')
+  // ➞ "chimney_dimensions.pdf"
+
+  decodeFilename('987654321_elf-roster.csv.tempfile')
+  // ➞ "elf-roster.csv"
+*/
+
+  function decodeFilename(filename) {
+    let firstUnderScore = filename.indexOf("_");
+    let lastPoint = filename.lastIndexOf(".");
+    let char = filename.slice(firstUnderScore + 1, lastPoint);
+    return char;
+  }
+  console.log(decodeFilename("2023122512345678_sleighDesign.png.grinchwa"));
+};
+
+() => {
+  /* Estás en un mercado muy especial en el que se venden árboles de Navidad 🎄. Cada uno viene decorado con una serie de adornos muy peculiares, y el precio del árbol se determina en función de los adornos que tiene.
+
+*: Copo de nieve - Valor: 1
+o: Bola de Navidad - Valor: 5
+^: Arbolito decorativo - Valor: 10
+#: Guirnalda brillante - Valor: 50
+@: Estrella polar - Valor: 100
+Normalmente se sumarían todos los valores de los adornos y ya está…
+Pero, ¡ojo! Si un adorno se encuentra inmediatamente a la izquierda de otro de mayor valor, en lugar de sumar, se resta su valor.
+  ejemplo : 
+    calculatePrice('***')  // 3   (1 + 1 + 1)
+    calculatePrice('*o')   // 4   (5 - 1)
+    calculatePrice('o*')   // 6   (5 + 1)
+    calculatePrice('*o*')  // 5  (-1 + 5 + 1) 
+    calculatePrice('**o*') // 6  (1 - 1 + 5 + 1) 
+    calculatePrice('o***') // 8   (5 + 3)
+    calculatePrice('*o@')  // 94  (-5 - 1 + 100)
+    calculatePrice('*#')   // 49  (-1 + 50)
+    calculatePrice('@@@')  // 300 (100 + 100 + 100)
+    calculatePrice('#@')   // 50  (-50 + 100)
+    calculatePrice('#@Z')  // undefined (Z es desconocido)
+ */
+  function calculatePrice(ornaments) {
+    let registers = {
+      "*": 1,
+      o: 5,
+      "^": 10,
+      "#": 50,
+      "@": 100,
+    };
+    let sum = 0;
+    for (let i = 0; i < ornaments.length; i++) {
+      if (!(ornaments[i] in registers)) {
+        return undefined;
+      }
+      if (registers[ornaments[i]] < registers[ornaments[i + 1]]) {
+        sum -= registers[ornaments[i]];
+      } else {
+        sum += registers[ornaments[i]];
+      }
+    }
+    return sum;
+  }
+  console.log(calculatePrice("*o*"));
+};
+
+() => {
+  /*  
+    Los elfos del Polo Norte han creado un robot 🤖 especial que ayuda a Papá Noel a distribuir
+    regalos dentro de un gran almacén. El robot se mueve en un plano 2D y partimos desde el origen (0, 0).
+
+    Queremos saber si, tras ejecutar una serie de movimientos, el robot vuelve a estar justo donde empezó.
+    Las órdenes básicas del robot son:
+    L: Mover hacia la izquierda
+    R: Mover hacia la derecha
+    U: Mover hacia arriba
+    D: Mover hacia abajo
+
+    Pero también tiene ciertos modificadores para los movimientos:
+    *: El movimiento se realiza con el doble de intensidad (ej: *R significa RR)
+    !: El siguiente movimiento se invierte (ej: R!L se considera como RR)
+    ?: El siguiente movimiento se hace sólo si no se ha hecho antes (ej: R?R significa R)
+
+    Nota: Cuando el movimiento se invierte con ! se contabiliza el movimiento invertido y
+    no el original. Por ejemplo, !U?U invierte el movimiento de U, por lo que contabiliza
+    que se hizo el movimiento D pero no el U. Así !U?U se traduce como D?U y, por lo tanto,
+    se haría el movimiento U final.
+
+    Debes devolver:
+    true: si el robot vuelve a estar justo donde empezó
+    [x, y]: si el robot no vuelve a estar justo donde empezó, devolver la posición donde se detuvo 
+
+    isRobotBack('R')     // [1, 0]
+    isRobotBack('RL')    // true => [x, y] || [1,0] || [1-1,0]
+    isRobotBack('RLUD')  // true => [x, y] || [1,0] || [1-1,0] || [0, 1] || [0, 1-1]
+    isRobotBack('*RU')   // [2, 1]
+    isRobotBack('R*U')   // [1, 2]
+    isRobotBack('LLL!R') // [-4, 0]
+    isRobotBack('R?R')   // [1, 0]
+    isRobotBack('U?D')   // true
+    isRobotBack('R!L')   // [2,0]
+    isRobotBack('U!D')   // [0,2]
+    isRobotBack('R?L')   // true
+    isRobotBack('U?U')   // [0,1]
+    isRobotBack('*U?U')  // [0,2]
+    isRobotBack('U?D?U') // true
+
+    // Ejemplos paso a paso:
+    isRobotBack('R!U?U') // [1,0]
+    // 'R'  -> se mueve a la derecha 
+    // '!U' -> se invierte y se convierte en 'D'
+    // '?U' -> se mueve arriba, porque no se ha hecho el movimiento 'U'
+
+    isRobotBack('UU!U?D') // [0,1]
+    // 'U'  -> se mueve arriba
+    // 'U'  -> se mueve arriba
+    // '!U' -> se invierte y se convierte en 'D'
+    // '?D' -> no se mueve, ya que ya se hizo el movimiento 'D'
+
+  */
+  /* descomponiendo el problema
+    tenemos : 
+    - movimientos
+    - modificadores de movimientos
+    - los movimientos se basaran en un plano 2d 
+    - se trabajaran con 2 ejes X e Y 
+      - eje X 
+          en tanto mas nos movamos para un lado el valor para X aumentara (si se mueve para las positivas)
+          o disminuira (si se mueve para las negativas)
+        - R => apunta a las X positivas = 1
+        - L => apunta a las X negativas = -1
+      - eje Y
+          en tanto mas nos movamos para un lado el valor para Y aumentara (si se mueve para las positivas)
+          o disminuira (si se mueve para las negativas)
+          - U => apunta a las Y positivas = 1
+          - D => apunta a las Y negativas = -1
+  */
+
+  function isRobotBack(moves) {
+    const map = {
+      R: { val: 1, eje: "X" },
+      L: { val: -1, eje: "X" },
+      U: { val: 1, eje: "Y" },
+      D: { val: -1, eje: "Y" },
+    };
+    // prev es el elemento previo
+    const location = { X: 0, Y: 0, prev: "" };
+    const opuesto = { R: "L", L: "R", U: "D", D: "U" };
+
+    for (let i = 0; i < moves.length; i++) {
+      if (!(moves[i] in map)) {
+        if (moves[i] == "*") {
+          location[map[moves[i + 1]]?.["eje"]] += map[moves[i + 1]]?.["val"];
+        } else if (moves[i] == "?") {
+          if (location.prev == moves[i + 1]) {
+            i++;
+          } else {
+            location[map[moves[i + 1]]?.["eje"]] += map[moves[i + 1]]?.["val"];
+            i++;
+          }
+        } else if (moves[i] == "!") {
+          location[map[opuesto[moves[i + 1]]]?.["eje"]] +=
+            map[opuesto[moves[i + 1]]]?.["val"];
+          // tambien guardamos el caracter previo cuando hagamos una transformacion
+          location.prev = opuesto[moves[i + 1]];
+          i++;
+        }
+      } else {
+        location[map[moves[i]]["eje"]] += map[moves[i]]["val"];
+        // en cada iteracion que no tenga un caracter especial guardamos prev para compararlo luego
+        location.prev = moves[i];
+      }
+    }
+    return location.X + location.Y == 0 ? true : [location.X, location.Y];
+  }
+  console.log(isRobotBack("!U?U"));
+  //console.log(isRobotBack("RRL"));
+  //console.log(isRobotBack("*R*U")); // multiplicador
+  //console.log(isRobotBack("R?R")); // se omite el movimiento si el anterior es el mismo
+  //console.log(isRobotBack("R!L")); // mover el opuesto4
+};
+
+() => {
+  /* Los renos necesitan moverse para ocupar los establos, pero no puede haber más de un reno por establo. Además,
+     para que los renos estén cómodos, debemos minimizar la distancia total que recorren para acomodarse.
+
+     Tenemos dos parámetros:
+
+     reindeer: Un array de enteros que representan las posiciones de los renos.
+     stables: Un array de enteros que representan las posiciones de los establos.
+     Hay que mover cada reno, desde su posición actual, hasta un establo. Pero hay que tener en cuenta que sólo puede
+     haber un reno por establo.
+
+     Tu tarea es calcular el mínimo número de movimientos necesarios para que todos los renos acaben en un establo.
+
+     Nota: Ten en cuenta que el array de establos siempre tendrá el mismo tamaño que el array de renos y que siempre los
+     establos serán únicos.
+
+      Ejemplo 
+
+        minMovesToStables([2, 6, 9], [3, 8, 5]) // -> 3
+      // Explicación:
+      // Renos en posiciones: 2, 6, 9
+      // Establos en posiciones: 3, 8, 5
+      // 1er reno: se mueve de la posición 2 al establo en la posición 3 (1 movimiento).
+      // 2do reno: se mueve de la posición 6 al establo en la posición 5 (1 movimiento)
+      // 3er reno: se mueve de la posición 9 al establo en la posición 8 (1 movimiento).
+      // Total de movimientos: 1 + 1 + 1 = 3 movimientos
+
+      minMovesToStables([1, 1, 3], [1, 8, 4])
+      // Explicación:
+      // Renos en posiciones: 1, 1, 3
+      // Establos en posiciones: 1, 8, 4
+      // 1er reno: no se mueve (0 movimientos)
+      // 2do reno: se mueve de la posición 1 al establo en la posición 4 (3 movimientos)
+      // 3er reno: se mueve de la posición 3 al establo en la posición 8 (5 movimientos)
+      // Total de movimientos: 0 + 3 + 5 = 8 movimientos
+
+  */
+
+  function minMovesToStables(reindeer, stables) {
+    reindeer.sort();
+    stables.sort();
+    let suma = 0;
+    for (let i = 0; i < reindeer.length; i++) {
+      let rec = reindeer[i] - stables[i];
+      suma += rec < 0 ? -1 * rec : rec;
+    }
+    return suma;
+  }
+  console.log(minMovesToStables([2, 6, 9], [3, 8, 5]));
+};
+
+/* FALTA ACABAR */
+() => {
+  /* FALTA ACABAR */
+  /* Al Polo Norte ha llegado ChatGPT y el elfo Sam Elfman está trabajando en una aplicación de administración
+     de regalos y niños.
+     Para mejorar la presentación, quiere crear una función drawTable que reciba un array de objetos y lo convierta
+     en una tabla de texto.
+
+     La tabla dibujada debe representar los datos del objeto de la siguiente manera:
+     Tiene una cabecera con el nombre de la columna.
+     El nombre de la columna pone la primera letra en mayúscula.
+     Cada fila debe contener los valores de los objetos en el orden correspondiente.
+     Cada valor debe estar alineado a la izquierda.
+     Los campos dejan siempre un espacio a la izquierda.
+     Los campos dejan a la derecha el espacio "necesario"(valor variable) para alinear la caja.
+     Mira el ejemplo para ver cómo debes dibujar la tabla: 
+*/
+
+  function drawTable(data) {
+    const keys = Object.keys(data[0]);
+    const result = data.reduce(
+      (a, b) => {
+        if (String(b[keys[0]]).length > a?.["col1"]) {
+          a = { ...a, col1: b[keys[0]].toString().length };
+        }
+        if (String(b[keys[1]]).length > a?.["col2"]) {
+          a = { ...a, col2: String(b[keys[1]]).length };
+        }
+        return a;
+      },
+      { col1: keys[0].length, col2: keys[1].length }
+    );
+    console.log(result);
+    let char = ``;
+    let respeat = `${"+"}${"-".repeat(result.col1 + 2)}+${"-".repeat(
+      result.col2 + 2
+    )}+`;
+    char += respeat + "\n";
+    char += `${"|"}${
+      " " + keys[0].slice(0, 1).toUpperCase() + keys[0].slice(1)
+    }${" ".repeat(result.col1 - keys[0].length + 1)}|${
+      " " + keys[1].slice(0, 1).toUpperCase() + keys[1].slice(1)
+    }${" ".repeat(result.col2 - keys[1].length + 1)}|\n`;
+    char += respeat + "\n";
+
+    for (let i = 0; i < data.length; i++) {
+      char += `${"|"}${" " + data[i][keys[0]]}${" ".repeat(
+        result.col1 - String(data[i][keys[0]]).length + 1
+      )}|${" " + data[i][keys[1]]}${" ".repeat(
+        result.col2 - String(data[i][keys[1]]).length + 1
+      )}|\n`;
+    }
+    char += respeat;
+    console.log(char);
+    return char;
+  }
+
+  drawTable([
+    { id: NaN, score: undefined },
+    { id: 2, score: 85 },
+  ]);
+  /* 
+  drawTable([
+    { name: "Alice", city: "London" },
+    { name: "Bob", city: "Paris" },
+    { name: "Charlie", city: "New York" },
+  ]);
+
+  drawTable([
+    { gift: "Doll", quantity: 10 },
+    { gift: "Book", quantity: 5 },
+    { gift: "Music CD", quantity: 1 },
+  ]); */
+  const data = { toys_and_things: undefined };
+  /*  console.log(String(data.toys_and_things));
+  console.log(Number("165")); */
+};
+
+() => {
+  /* Los elfos están trabajando arduamente para limpiar los caminos llenos de nieve mágica ❄️. Esta nieve tiene una propiedad especial: si dos montículos de nieve idénticos y adyacentes se encuentran, desaparecen automáticamente.
+
+  Tu tarea es escribir una función que ayude a los elfos a simular este proceso. El camino se representa por una cadena de texto y cada montículo de nieve un carácter.
+
+  Tienes que eliminar todos los montículos de nieve adyacentes que sean iguales hasta que no queden más movimientos posibles.
+
+  El resultado debe ser el camino final después de haber eliminado todos los montículos duplicados:
+
+  removeSnow('zxxzoz') // -> "oz"
+  // 1. Eliminamos "xx", quedando "zzoz"
+  // 2. Eliminamos "zz", quedando "oz"
+
+  removeSnow('abcdd') // -> "abc"
+  // 1. Eliminamos "dd", quedando "abc"
+
+  removeSnow('zzz') // -> "z"
+  // 1. Eliminamos "zz", quedando "z"
+
+  removeSnow('a') // -> "a"
+  // No hay montículos repetidos
+
+*/
+  /* pseudocodigo :
+    - primero crear una variable que contenga la cadena original, esto con el fin de mutar
+    el texto
+    - luego crear otra variable index que inicie en cero
+    - recorrer la cadena mientras index sea menor a la cadena 
+    - en cada recorrido comparar si el elemento actual y su adyacente siguiente son iguales
+      - si son asi eliminar esas 2 porciones de la cadena
+      - la variable index igualarlo a index-1 => si el resultado es undefined quiere decir que
+      - eliminamos los 2 primeros caracteres de la cadena entonces igualamos index a 0
+  */
+  function removeSnow(s) {
+    let index = 0;
+    while (index < s.length) {
+      if (s[index] === s[index + 1]) {
+        s = s.slice(0, index) + s.slice(index + 2);
+        if (s.length <= 0) return s;
+        index = index - 1;
+      } else {
+        index++;
+      }
+    }
+    return s;
+  }
+  let char = "zxxzoz";
+  console.log(removeSnow(char));
+};
